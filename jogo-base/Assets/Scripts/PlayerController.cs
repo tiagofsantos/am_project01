@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public float jumpPower = 250f;//potencia do salto
     public bool grounded;//esta no chão
     private Rigidbody2D player; //boneco/jogador
+    private Vector3 respawnPoint;
 
 
     // Use this for initialization
@@ -65,7 +66,20 @@ public class PlayerController : MonoBehaviour {
 
         
     }
-    
-   
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Checkpoint"))
+        {
+            respawnPoint = other.transform.position;
+        }
+    }
+
+    public void Respawn()
+    {
+        player.transform.position = respawnPoint;
+    }
+
+
 
 }
