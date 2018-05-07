@@ -76,8 +76,6 @@ public class Vitals
 
         if (stunClock < 0)
             stunClock = 0;
-
-        Debug.Log(stunClock);
     }
 
 }
