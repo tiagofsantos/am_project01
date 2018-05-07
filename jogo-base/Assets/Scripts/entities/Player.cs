@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     private Character character;
     private Vitals vitals;
@@ -8,22 +11,31 @@ public class Player : MonoBehaviour {
 
     private bool sprinting;
 
-    public Player() {
-        this.vitals = new Vitals();
-        this.sprinting = false;
-        this.inventory = new Inventory();
-    }
-    
-	void Start () {
-        this.character = new Scout();
+    public Player()
+    {
+        sprinting = false;
+        inventory = new Inventory();
     }
 
-    void Update () {
+    void Start()
+    {
+        character = new Scout();
+        vitals = new Vitals(character.getLevel(Skill.Resistance));
+    }
 
+    void Update()
+    {
         if (sprinting)
             Debug.Log("Alterar velocidade aqui");
         else
-            vitals.restoreStamina(character.getLevel(Skill.Resistance));
-	}
+            vitals.restoreStamina();
+
+        vitals.Update();
+    }
+
+    public void stun()
+    {
+        vitals.stun();
+    }
 
 }
