@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vitals : MonoBehaviour {
+public class Vitals {
 
     /* O limite máximo de stamina (era melhor mante-lo entre os limites de percentagem 0-100) */
     private const int MAX_STAMINA = 100;

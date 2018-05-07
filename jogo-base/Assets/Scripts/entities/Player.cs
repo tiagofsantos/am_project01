@@ -1,17 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour {
 
     private Character character;
     private Vitals vitals;
+    private Inventory inventory;
 
     private bool sprinting;
 
     public Player() {
         this.vitals = new Vitals();
         this.sprinting = false;
+        this.inventory = new Inventory();
     }
     
 	void Start () {
