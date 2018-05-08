@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundCheck : MonoBehaviour {
-    private PlayerController player;
 
-
-	// Use this for initialization
+    private PlayerMovement player;
+    
 	void Start () {
-        player = gameObject.GetComponentInParent<PlayerController>();
+        player = gameObject.GetComponentInParent<PlayerMovement>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
