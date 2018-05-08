@@ -20,7 +20,8 @@ public class ActionTracker : MonoBehaviour {
 
     private void OnApplicationQuit()
     {
-        //Save();  desativado temporáriamente, deverá ser ativado quando este sistema estiver completo.
+        //save(); //  desativado temporáriamente, deverá ser ativado quando este sistema estiver completo.
+        //Debug.Log("Guardou");
     }
 
     /* Guarda as ações desta última sessão em ficheiro. */
