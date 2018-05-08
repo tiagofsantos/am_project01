@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class HoleTrigger : MonoBehaviour {
 
-    private PlayerController player;
+    private PlayerMovement player;
     private string playerTag;
 
 	// Use this for initialization
 	void Start () {
         playerTag = "Player";
-        player = GameObject.FindGameObjectWithTag(playerTag).GetComponent<PlayerController>();
+        player = GameObject.FindGameObjectWithTag(playerTag).GetComponent<PlayerMovement>();
 	}
 	
 	// Update is called once per frame

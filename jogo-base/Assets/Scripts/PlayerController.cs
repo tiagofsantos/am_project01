@@ -1,11 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
 
-    private Vector3 respawnPoint;
     public PlayerMovement movementScript;
 
     void Update()
@@ -32,16 +31,5 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Checkpoint"))
-        {
-            respawnPoint = other.transform.position;
-        }
-    }
-
-    public void Respawn()
-    {
-        player.transform.position = respawnPoint;
-    }
+    
 }

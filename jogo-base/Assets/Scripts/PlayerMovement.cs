@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public const float DECELERATION_RATE = .9f;
 
     /* Velocidade do player */
-    public float movementSpeed = 3;
+    public float movementSpeed = 7;
 
     /* Potência do salto */
     public float jumpPower = 250f;
@@ -26,9 +26,13 @@ public class PlayerMovement : MonoBehaviour
     /* A última direção para a qual o player se estava a mover */
     private float direction;
 
+    /* Posição do último checkpoint onde o player passou.*/
+    private Vector3 respawnPoint;
+
     void Start()
     {
         player = gameObject.GetComponent<Rigidbody2D>();
+        respawnPoint = player.transform.position;
     }
 
     void Update()
@@ -102,6 +106,19 @@ public class PlayerMovement : MonoBehaviour
             player.AddForce(Vector2.up * jumpPower);
     }
 
+    
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        /*Atualiza a posição do último Checkpoint ao passar por um novo*/
+        if (other.CompareTag("Checkpoint"))
+        {
+            respawnPoint = other.transform.position;
+        }
+    }
 
-
+    /*Move o player para a posição do último checkpoint*/
+    public void Respawn()
+    {
+        player.transform.position = respawnPoint;
+    }
 }
