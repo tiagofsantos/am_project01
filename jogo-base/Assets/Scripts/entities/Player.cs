@@ -11,26 +11,25 @@ public class Player : MonoBehaviour
 
     private bool sprinting;
 
-    public Player()
+    public Player(Character character)
     {
+        this.character = character;
         sprinting = false;
         inventory = new Inventory();
-    }
-
-    void Start()
-    {
-        character = new Scout();
         vitals = new Vitals(character.getLevel(Skill.Resistance));
+        Debug.Log(vitals == null);
     }
-
+    
     void Update()
     {
+       // Debug.Log(vitals == null);
+        /*
         if (sprinting)
             Debug.Log("Alterar velocidade aqui");
         else
             vitals.restoreStamina();
 
-        vitals.Update();
+        vitals.Update();*/
     }
 
     public void stun()

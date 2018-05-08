@@ -10,12 +10,13 @@ public class ActionReplay : MonoBehaviour
 
     void Start()
     {
-        this.actions = ActionTracker.Load();
+       // this.actions = ActionTracker.Load();
     }
 
     void Update()
     {
 
+        /*
         if (movementScript == null)
             return;
 
@@ -45,7 +46,7 @@ public class ActionReplay : MonoBehaviour
                 action.executed = true;
 
             }
-        }
+        }*/
     }
 
 }
