@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (movementScript != null) {
-
-            if (Input.GetButtonDown("Jump"))
+            
+            if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 movementScript.jump();
             }
