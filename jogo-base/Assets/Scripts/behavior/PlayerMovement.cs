@@ -6,13 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
 
     /* Velocidade máxima */
-    private const int MAX_SPEED = 10;
+    private const int MAX_SPEED = 15;
 
     /* Velocidade de desaceleração */
     public const float DECELERATION_RATE = .9f;
 
     /* Velocidade do player */
-    public float movementSpeed = 3;
+    public float movementSpeed = 7;
 
     /* Potência do salto */
     public float jumpPower = 250f;
@@ -101,7 +101,5 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
             player.AddForce(Vector2.up * jumpPower);
     }
-
-
 
 }
