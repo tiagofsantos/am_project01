@@ -14,9 +14,9 @@ public abstract class Character
     public Character()
     {
         skillSet = new Dictionary<Skill, int>();
-        skillSet.Add(Skill.Speed, 0);
-        skillSet.Add(Skill.Strength, 0);
-        skillSet.Add(Skill.Resistance, 0);
+        skillSet.Add(Skill.SPEED, 0);
+        skillSet.Add(Skill.STRENGTH, 0);
+        skillSet.Add(Skill.ENDURANCE, 0);
     }
 
     public void setName(string name)

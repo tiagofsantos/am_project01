@@ -7,9 +7,9 @@ public class Scout : Character {
     public Scout()
     {
         setName("Scout");
-        setLevel(Skill.Speed, 9);
-        setLevel(Skill.Strength, 3);
-        setLevel(Skill.Resistance, 3);
+        setLevel(Skill.SPEED, 9);
+        setLevel(Skill.STRENGTH, 3);
+        setLevel(Skill.ENDURANCE, 3);
     }
     
 }

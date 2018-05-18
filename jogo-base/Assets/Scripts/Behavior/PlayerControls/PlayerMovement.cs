@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    /* Velocidade máxima */
+    private const int MAX_SPEED = 10;
 
     /* Velocidade máxima */
-    private const int MAX_SPEED = 15;
+    private const float SPRINT_RATE = 1.8F;
 
     /* Velocidade de desaceleração */
-    public const float DECELERATION_RATE = .9f;
+    public const float DECELERATION_RATE = .6f;
 
     /* Velocidade do player */
-    public float movementSpeed = 7;
+    public float movementSpeed = 4;
 
     /* Potência do salto */
-    public float jumpPower = 250f;
+    public float jumpPower = 400f;
 
     /* Determina se o player está no chão ou no ar (grounded || airbourne) */
     public bool grounded;
@@ -25,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
 
     /* A última direção para a qual o player se estava a mover */
     private float direction;
+
+    /* Determina se o player está a correr */
+    public bool sprinting;
 
     void Start()
     {
@@ -39,13 +44,16 @@ public class PlayerMovement : MonoBehaviour
     /* Limita a velocidade horizontal do jogador */
     private void limitVelocity()
     {
-        if (player.velocity.x > MAX_SPEED)
+
+        int maxSpeed = (int) (MAX_SPEED * (sprinting ? SPRINT_RATE : 1));
+
+        if (player.velocity.x > maxSpeed)
         {
-            player.velocity = new Vector2(MAX_SPEED, player.velocity.y);
+            player.velocity = new Vector2(maxSpeed, player.velocity.y);
         }
-        else if (player.velocity.x < -MAX_SPEED)
+        else if (player.velocity.x < -maxSpeed)
         {
-            player.velocity = new Vector2(-MAX_SPEED, player.velocity.y);
+            player.velocity = new Vector2(-maxSpeed, player.velocity.y);
         }
     }
 
@@ -59,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
             direction = offset;
         }
 
-        player.AddForce((Vector2.right * movementSpeed) * offset);
+        player.velocity = new Vector2(movementSpeed * offset * (sprinting ? SPRINT_RATE : 1), player.velocity.y);
         transform.localScale = new Vector3(offset, 1, 1);
     }
 
@@ -101,5 +109,4 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
             player.AddForce(Vector2.up * jumpPower);
     }
-
 }

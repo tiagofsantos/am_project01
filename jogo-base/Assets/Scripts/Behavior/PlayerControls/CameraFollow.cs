@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollow : MonoBehaviour
+{
 
     private Vector2 velocity;
     public float smoothTimeY;
@@ -12,15 +13,10 @@ public class CameraFollow : MonoBehaviour {
     public Vector3 minCaneraPos;
     public Vector3 maxCameraPos;
 
-    // Use this for initialization
-    void Start () {
+    void Start()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
 
     void FixedUpdate()
     {
@@ -35,6 +31,5 @@ public class CameraFollow : MonoBehaviour {
                 Mathf.Clamp(transform.position.y, minCaneraPos.y, maxCameraPos.y),
                 Mathf.Clamp(transform.position.z, minCaneraPos.z, maxCameraPos.z));
         }
-
     }
 }

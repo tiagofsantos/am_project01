@@ -7,9 +7,9 @@ public class Buster : Character {
     public Buster()
     {
         setName("Buster");
-        setLevel(Skill.Speed, 3);
-        setLevel(Skill.Strength, 9);
-        setLevel(Skill.Resistance, 3);
+        setLevel(Skill.SPEED, 3);
+        setLevel(Skill.STRENGTH, 9);
+        setLevel(Skill.ENDURANCE, 3);
     }
     
 }

@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ActionType {
-    MOVE_RIGHT, MOVE_LEFT, JUMP, DECELERATE
+public enum ActionType
+{
+
+    MOVE_RIGHT,
+    MOVE_LEFT,
+    JUMP,
+    STOP
+
 }

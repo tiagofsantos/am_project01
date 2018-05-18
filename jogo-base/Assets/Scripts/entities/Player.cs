@@ -1,26 +1,31 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Player : MonoBehaviour
 {
+    public User user;
 
-    private Character character;
+    public Character character;
     private Vitals vitals;
     private Inventory inventory;
 
     private bool sprinting;
 
-    public Player()
+    public Player(User user, Character character) {
+        init(user, character);
+    }
+    
+    public void init(User user, Character character)
     {
+        this.character = character;
+        this.user = user;
+
+        vitals = new Vitals(character);
         sprinting = false;
         inventory = new Inventory();
-    }
-
-    void Start()
-    {
-        character = new Scout();
-        vitals = new Vitals(character.getLevel(Skill.Resistance));
     }
 
     void Update()
