@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum Skill
 {
-    Speed, Strength, Resistance
+    SPEED, STRENGTH, ENDURANCE
 }

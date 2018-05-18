@@ -6,10 +6,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 [Serializable]
-public class Session {
-
-    private static int uniqueId = 0;
-
+public class Session
+{
     private int id;
 
     private DateTime date;
@@ -18,32 +16,42 @@ public class Session {
     private Player player;
     private Player shadow;
 
-    private PlayerActions playerActions;
+    public List<PlayerAction> playerActions;
 
-    public Session(Player player, Player shadow) {
-        id = uniqueId++;
-        playerActions = new PlayerActions();
+    public Session(int id, Player player, Player shadow)
+    {
+        this.id = id;
+        this.player = player;
+        this.shadow = shadow;
+        playerActions = new List<PlayerAction>();
     }
 
-    public void start() {
+    public void start()
+    {
         date = DateTime.Now;
     }
 
-    public void end() {
+    public void end()
+    {
         TimeSpan elapsed = DateTime.Now - date;
         elapsedTime = elapsed.Milliseconds;
     }
 
-    public void save(String username)
+    public void save(String username, ActionTracker tracker)
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.dataPath + "/Data/Users/" + username + "/Sessions/" + id + ".dat");
+
+        playerActions = tracker.actions;
+
         bf.Serialize(file, this);
-        Debug.Log("Saved on " + id + ".dat");
+
+        Debug.Log("Saved on " + id + ".dat (" + playerActions.Count + ")");
+
         file.Close();
     }
-    
-    public static PlayerActions load(String username, int id)
+
+    public static Session load(String username, int id)
     {
         if (File.Exists(Application.dataPath + "/Data/Users/" + username + "/Sessions/" + id + ".dat"))
         {
@@ -51,7 +59,7 @@ public class Session {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.dataPath + "/Data/Users/" + username + "/Sessions/" + id + ".dat", FileMode.Open);
 
-            PlayerActions data = (PlayerActions)bf.Deserialize(file);
+            Session data = (Session)bf.Deserialize(file);
             file.Close();
 
             return data;

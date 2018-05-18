@@ -1,21 +1,29 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class ActionTracker : MonoBehaviour {
+public class ActionTracker : MonoBehaviour
+{
 
-    private static PlayerActions actions;
+    public List<PlayerAction> actions;
+    private int executions;
 
-	void Start () {
-        actions = new PlayerActions();
-	}
+    public ActionTracker()
+    {
+        actions = new List<PlayerAction>();
+    }
 
     /* Adiciona uma nova ação, no tempo actual. */
-    public static void addAction(ActionType type) {
-        actions.actionList.Add(new PlayerAction(type, Time.time));
+    public void addAction(ActionType type)
+    {
+        if (actions.Count == 0 || actions[actions.Count - 1].type != type)
+        {
+            actions.Add(new PlayerAction(type, Time.time, executions));
+            executions = 0;
+        }
+        else
+            executions++;
     }
-    
+
 }

@@ -5,48 +5,76 @@ using UnityEngine;
 public class ActionReplay : MonoBehaviour
 {
 
-    public PlayerMovement movementScript;
-    private PlayerActions actions;
+    private PlayerMovement movementScript;
+    public List<PlayerAction> actions;
+
+    private PlayerAction lastAction;
+    private int executions;
+    private int count;
 
     void Start()
     {
-       // this.actions = ActionTracker.Load();
+        movementScript = gameObject.GetComponentInParent<PlayerMovement>();
+        executions = 0;
     }
 
     void Update()
     {
-
-        /*
-        if (movementScript == null)
-            return;
-
         float currentTime = Time.time;
+        count++;
 
-        foreach (PlayerAction action in actions.actionList)
+        foreach (PlayerAction action in actions)
         {
             if (currentTime > action.timestamp && !action.executed)
             {
-
-                switch (action.type)
-                {
-                    case ActionType.DECELERATE:
-                        movementScript.decelerate();
-                        break;
-                    case ActionType.MOVE_LEFT:
-                        movementScript.moveLeft();
-                        break;
-                    case ActionType.MOVE_RIGHT:
-                        movementScript.moveRight();
-                        break;
-                    case ActionType.JUMP:
-                        movementScript.jump();
-                        break;
-                }
-
+                lastAction = action;
                 action.executed = true;
 
+                executeAction(action);
+                executions = 1;
             }
-        }*/
+            else
+            {
+                if (lastAction != null)
+                {
+
+                    PlayerAction next = null;
+                    int currentIndex = actions.IndexOf(lastAction);
+
+                    if (currentIndex + 1 < actions.Count)
+                        next = actions[currentIndex + 1];
+
+                    if (next != null && executions < next.previousExecutions)
+                    {
+                        executeAction(lastAction);
+                        executions++;
+                    }
+
+                }
+            }
+        }
+    }
+
+    private void executeAction(PlayerAction action)
+    {
+
+        if (action.type == ActionType.JUMP)
+        {
+            movementScript.jump();
+        }
+
+        switch (action.type)
+        {
+            case ActionType.STOP:
+                movementScript.stop();
+                break;
+            case ActionType.MOVE_LEFT:
+                movementScript.moveLeft();
+                break;
+            case ActionType.MOVE_RIGHT:
+                movementScript.moveRight();
+                break;
+        }
     }
 
 }

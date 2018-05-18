@@ -11,8 +11,8 @@ public class Vitals
     /* O multiplier a adicionar por cada game tick, quanto maior, mais rápido a stamina regenera */
     private const float STAMINA_MULTIPLIER = 0.8f;
 
-    /* O nível de resistencia do player, definido na inicialização da classe */
-    private int resistanceLevel;
+    /* A personagem utilizada pelo utilizador. */
+    private Character character;
 
     /* O nível de stamina do player (0 - MAX_STAMINA) */
     private float stamina;
@@ -20,17 +20,17 @@ public class Vitals
     /* O contador de stun, 0 = !stunned */
     private float stunClock;
 
-    public Vitals(int resistanceLevel)
+    public Vitals(Character character)
     {
         stunClock = 0;
         stamina = 0;
-        this.resistanceLevel = resistanceLevel;
+        this.character = character;
     }
 
     /* Restaura a stamina todos os game ticks (sobe a stamina por uma pequena quantidade) */
     public void restoreStamina()
     {
-        float amount = resistanceLevel * STAMINA_MULTIPLIER * Time.deltaTime;
+        float amount = character.getLevel(Skill.ENDURANCE) * STAMINA_MULTIPLIER * Time.deltaTime;
 
         /* ignorar quantidades negativas ou zero */
         if (amount <= 0)
@@ -64,7 +64,7 @@ public class Vitals
      * */
     private float stunPenalty()
     {
-        return ((Character.MAX_SKILL_LEVEL - resistanceLevel) / 2) + 2;
+        return ((Character.MAX_SKILL_LEVEL - character.getLevel(Skill.ENDURANCE)) / 2) + 2;
     }
 
     public void Update()

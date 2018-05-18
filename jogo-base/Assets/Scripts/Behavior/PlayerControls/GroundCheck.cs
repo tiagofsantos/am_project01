@@ -4,33 +4,25 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour {
 
-    private PlayerMovement player;
+    private PlayerMovement playerMovement;
     
 	void Start () {
-        player = gameObject.GetComponentInParent<PlayerMovement>();
-	}
-	
-	void Update () {
-		
+        playerMovement = gameObject.GetComponentInParent<PlayerMovement>();
 	}
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        player.grounded = true;
+        playerMovement.grounded = true;
     }
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        player.grounded = true;
+        playerMovement.grounded = true;
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        player.grounded = false;
+        playerMovement.grounded = false;
     }
-
     
-
-
-
 }

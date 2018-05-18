@@ -1,35 +1,41 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Player : MonoBehaviour
 {
+    public User user;
 
-    private Character character;
+    public Character character;
     private Vitals vitals;
     private Inventory inventory;
 
     private bool sprinting;
 
-    public Player(Character character)
-    {
-        this.character = character;
-        sprinting = false;
-        inventory = new Inventory();
-        vitals = new Vitals(character.getLevel(Skill.Resistance));
-        Debug.Log(vitals == null);
+    public Player(User user, Character character) {
+        init(user, character);
     }
     
+    public void init(User user, Character character)
+    {
+        this.character = character;
+        this.user = user;
+
+        vitals = new Vitals(character);
+        sprinting = false;
+        inventory = new Inventory();
+    }
+
     void Update()
     {
-       // Debug.Log(vitals == null);
-        /*
         if (sprinting)
             Debug.Log("Alterar velocidade aqui");
         else
             vitals.restoreStamina();
 
-        vitals.Update();*/
+        vitals.Update();
     }
 
     public void stun()

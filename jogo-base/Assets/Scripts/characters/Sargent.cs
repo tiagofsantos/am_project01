@@ -7,9 +7,9 @@ public class Sargent : Character {
     public Sargent()
     {
         setName("Sargent");
-        setLevel(Skill.Speed, 3);
-        setLevel(Skill.Strength, 3);
-        setLevel(Skill.Resistance, 9);
+        setLevel(Skill.SPEED, 3);
+        setLevel(Skill.STRENGTH, 3);
+        setLevel(Skill.ENDURANCE, 9);
     }
     
 }
