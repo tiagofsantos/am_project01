@@ -29,9 +29,6 @@ public class PlayerMovement : MonoBehaviour
     /* Posição do último checkpoint onde o player passou.*/
     private Vector3 respawnPoint;
 
-    /* Verifica se o jogador pode movimentar a personagem*/
-    private bool movementEnabled;
-
     /* Verifica se o jogador está a "morrer" */
     public bool respawning;
 
@@ -39,7 +36,6 @@ public class PlayerMovement : MonoBehaviour
     {
         player = gameObject.GetComponent<Rigidbody2D>();
         respawnPoint = player.transform.position;
-        movementEnabled = true;
         respawning = false;
     }
 
@@ -101,19 +97,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void moveLeft()
     {
-        if(movementEnabled) //Apenas deixa o jogador se movimentar se possível
+        if(!respawning) //Apenas deixa o jogador se movimentar se possível
             moveHorizontal(-1);
     }
 
     public void moveRight()
     {
-        if(movementEnabled) //Apenas deixa o jogador se movimentar se possível
+        if(!respawning) //Apenas deixa o jogador se movimentar se possível
             moveHorizontal(1);
     }
 
     public void jump()
     {
-        if(movementEnabled) //Apenas deixa o jogador se movimentar se possível
+        if(!respawning) //Apenas deixa o jogador se movimentar se possível
             if (grounded)
                 player.AddForce(Vector2.up * jumpPower);
     }
@@ -137,8 +133,7 @@ public class PlayerMovement : MonoBehaviour
     /*Faz o jogador desaparecer e reaparecer no último checkpoint.*/
     public IEnumerator Fade()
     {
-        movementEnabled = false; // O jogador deixa de poder controlar a personagem
-        respawning = true;
+        respawning = true; // O jogador deixa de poder controlar a personagem
         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
         Color color = renderer.material.color;
         float speed = 0.1f; // Percisa de 10 iterações
@@ -166,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
         //volta ao checkpoint
         Respawn();
 
-        movementEnabled = true; // O jogador volta a ganhar controlo da personagem quando esta volta ao checkpoint
+        respawning = false; // O jogador volta a ganhar controlo da personagem quando esta volta ao checkpoint
 
         //fade in
         while (color.a < 1)
@@ -179,7 +174,6 @@ public class PlayerMovement : MonoBehaviour
 
             yield return new WaitForSeconds(wait);
         }
-        respawning = false;
     }
 
 }

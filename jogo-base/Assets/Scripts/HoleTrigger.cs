@@ -6,14 +6,12 @@ public class HoleTrigger : MonoBehaviour {
 
     private PlayerMovement player;
     private string playerTag;
-
-	// Use this for initialization
+    
 	void Start () {
         playerTag = "Player";
         player = GameObject.FindGameObjectWithTag(playerTag).GetComponent<PlayerMovement>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
@@ -22,7 +20,7 @@ public class HoleTrigger : MonoBehaviour {
     {
         if (collision.CompareTag(playerTag))
         {
-            player.Respawn();
+            StartCoroutine(player.Fade());
         }
     }
 }
