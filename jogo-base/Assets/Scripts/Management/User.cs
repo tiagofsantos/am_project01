@@ -9,8 +9,8 @@ public class User {
     public string name;
     public string email;
     public DateTime birthdate;
-    public String password;
-    public String country;
+    public string password;
+    public string country;
 
     public User(int id, string name, string email, DateTime birthdate, string passwordInput, string country) {
         this.id = id;
@@ -19,7 +19,6 @@ public class User {
         this.birthdate = birthdate;
         this.country = country;
         password = hash(passwordInput);
-
     }
 
     /* Stub, subsituir mais tarde por algoritmo de hashing */

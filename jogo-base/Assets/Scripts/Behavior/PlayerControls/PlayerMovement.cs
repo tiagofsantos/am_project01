@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Player localPlayer;
+
     /* Velocidade máxima */
     private const int MAX_SPEED = 10;
 
@@ -23,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public bool grounded;
 
     /* Rigidbody do player */
-    private Rigidbody2D player;
+    private Rigidbody2D body;
 
     /* A última direção para a qual o player se estava a mover */
     private float direction;
@@ -33,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        player = gameObject.GetComponent<Rigidbody2D>();
+        localPlayer = gameObject.GetComponent<Player>();
+        body = gameObject.GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -44,16 +47,15 @@ public class PlayerMovement : MonoBehaviour
     /* Limita a velocidade horizontal do jogador */
     private void limitVelocity()
     {
+        int max = maxSpeed();
 
-        int maxSpeed = (int) (MAX_SPEED * (sprinting ? SPRINT_RATE : 1));
-
-        if (player.velocity.x > maxSpeed)
+        if (body.velocity.x > max)
         {
-            player.velocity = new Vector2(maxSpeed, player.velocity.y);
+            body.velocity = new Vector2(max, body.velocity.y);
         }
-        else if (player.velocity.x < -maxSpeed)
+        else if (body.velocity.x < -max)
         {
-            player.velocity = new Vector2(-maxSpeed, player.velocity.y);
+            body.velocity = new Vector2(-max, body.velocity.y);
         }
     }
 
@@ -66,8 +68,7 @@ public class PlayerMovement : MonoBehaviour
             stop();
             direction = offset;
         }
-
-        player.velocity = new Vector2(movementSpeed * offset * (sprinting ? SPRINT_RATE : 1), player.velocity.y);
+        body.velocity = new Vector2(speed() * offset, body.velocity.y);
         transform.localScale = new Vector3(offset, 1, 1);
     }
 
@@ -79,19 +80,35 @@ public class PlayerMovement : MonoBehaviour
      */
     public void decelerate()
     {
-        if (player.velocity.x != 0)
+        if (body.velocity.x != 0)
         {
-            if (player.velocity.x < 0.01f && player.velocity.x > -0.01f)
+            if (body.velocity.x < 0.01f && body.velocity.x > -0.01f)
                 stop();
             else
-                player.velocity = new Vector2(player.velocity.x * DECELERATION_RATE, player.velocity.y);
+                body.velocity = new Vector2(body.velocity.x * DECELERATION_RATE, body.velocity.y);
         }
+    }
+
+    private int maxSpeed() {
+        return (int)(MAX_SPEED * sprintModifier() * speedLevelModifier());
+    }
+
+    private int speed() {
+        return (int) (movementSpeed * sprintModifier() * speedLevelModifier());
+    }
+
+    private float sprintModifier() {
+        return sprinting ? SPRINT_RATE : 1;
+    }
+
+    private float speedLevelModifier() {
+        return 1 + ((float) localPlayer.character.getLevel(Skill.SPEED) / 50);
     }
 
     /* Põe a velocidade horizontal a 0 */
     public void stop()
     {
-        player.velocity = new Vector2(0, player.velocity.y);
+        body.velocity = new Vector2(0, body.velocity.y);
     }
 
     public void moveLeft()
@@ -107,6 +124,6 @@ public class PlayerMovement : MonoBehaviour
     public void jump()
     {
         if (grounded)
-            player.AddForce(Vector2.up * jumpPower);
+            body.AddForce(Vector2.up * jumpPower);
     }
 }

@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class ActionTracker : MonoBehaviour
 {
-
     public List<PlayerAction> actions;
     private int executions;
 
-    public ActionTracker()
+    void Start()
     {
         actions = new List<PlayerAction>();
     }

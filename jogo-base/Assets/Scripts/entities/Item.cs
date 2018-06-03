@@ -5,9 +5,11 @@ using UnityEngine;
 public abstract class Item {
 
     public int id;
-    public bool consumable;
+    public string name;
+    public int effectDuration;
+    public float effectTimer;
     public int spriteId;
 
-    public abstract void onConsume();
-
+    public abstract void onConsume(Player player);
+    public abstract void onExpiration(Player player);
 }

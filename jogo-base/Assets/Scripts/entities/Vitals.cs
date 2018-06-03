@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vitals
+public class Vitals : MonoBehaviour
 {
+    /* O player ao qual os vitais estão associados */
+    private Player localPlayer;
 
     /* O limite máximo de stamina (era melhor mante-lo entre os limites de percentagem 0-100) */
     private const int MAX_STAMINA = 100;
@@ -11,26 +14,37 @@ public class Vitals
     /* O multiplier a adicionar por cada game tick, quanto maior, mais rápido a stamina regenera */
     private const float STAMINA_MULTIPLIER = 0.8f;
 
-    /* A personagem utilizada pelo utilizador. */
-    private Character character;
-
     /* O nível de stamina do player (0 - MAX_STAMINA) */
     private float stamina;
 
     /* O contador de stun, 0 = !stunned */
     private float stunClock;
 
-    public Vitals(Character character)
+    void Start()
     {
+        localPlayer = gameObject.GetComponent<Player>();
+
         stunClock = 0;
         stamina = 0;
-        this.character = character;
+    }
+
+    void Update()
+    {
+        /* Se está stunned, decrescer o contador */
+        if (isStunned())
+        {
+            stunClock -= Time.deltaTime;
+        }
+
+        /* Se o contador passou do limite minimo, igualar a 0 */
+        if (stunClock < 0)
+            stunClock = 0;
     }
 
     /* Restaura a stamina todos os game ticks (sobe a stamina por uma pequena quantidade) */
     public void restoreStamina()
     {
-        float amount = character.getLevel(Skill.ENDURANCE) * STAMINA_MULTIPLIER * Time.deltaTime;
+        float amount = localPlayer.character.getLevel(Skill.ENDURANCE) * STAMINA_MULTIPLIER * Time.deltaTime;
 
         /* ignorar quantidades negativas ou zero */
         if (amount <= 0)
@@ -64,18 +78,7 @@ public class Vitals
      * */
     private float stunPenalty()
     {
-        return ((Character.MAX_SKILL_LEVEL - character.getLevel(Skill.ENDURANCE)) / 2) + 2;
-    }
-
-    public void Update()
-    {
-        if (stunClock > 0)
-        {
-            stunClock -= Time.deltaTime;
-        }
-
-        if (stunClock < 0)
-            stunClock = 0;
+        return ((Character.MAX_SKILL_LEVEL - localPlayer.character.getLevel(Skill.ENDURANCE)) / 2) + 2;
     }
 
 }
