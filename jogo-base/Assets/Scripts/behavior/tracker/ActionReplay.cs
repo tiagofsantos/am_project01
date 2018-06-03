@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class ActionReplay : MonoBehaviour
 {
+    /* O player ao qual este script está associado */
+    private Player localPlayer;
 
-    private PlayerMovement movementScript;
     public List<PlayerAction> actions;
 
     private PlayerAction lastAction;
     private int executions;
     private int count;
 
+
     void Start()
     {
-        movementScript = gameObject.GetComponentInParent<PlayerMovement>();
-        executions = 0;
+        localPlayer = gameObject.GetComponent<Player>();
     }
 
     void Update()
@@ -29,7 +30,6 @@ public class ActionReplay : MonoBehaviour
             {
                 lastAction = action;
                 action.executed = true;
-
                 executeAction(action);
                 executions = 1;
             }
@@ -37,7 +37,6 @@ public class ActionReplay : MonoBehaviour
             {
                 if (lastAction != null)
                 {
-
                     PlayerAction next = null;
                     int currentIndex = actions.IndexOf(lastAction);
 
@@ -57,22 +56,21 @@ public class ActionReplay : MonoBehaviour
 
     private void executeAction(PlayerAction action)
     {
-
         if (action.type == ActionType.JUMP)
         {
-            movementScript.jump();
+            localPlayer.movement.jump();
         }
 
         switch (action.type)
         {
             case ActionType.STOP:
-                movementScript.stop();
+                localPlayer.movement.stop();
                 break;
             case ActionType.MOVE_LEFT:
-                movementScript.moveLeft();
+                localPlayer.movement.moveLeft();
                 break;
             case ActionType.MOVE_RIGHT:
-                movementScript.moveRight();
+                localPlayer.movement.moveRight();
                 break;
         }
     }

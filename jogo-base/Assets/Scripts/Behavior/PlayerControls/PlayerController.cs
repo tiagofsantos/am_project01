@@ -4,47 +4,45 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerMovement movementScript;
-    private ActionTracker trackerScript;
+    private Player localPlayer;
 
     private void Start()
     {
-        movementScript = gameObject.GetComponentInParent<PlayerMovement>();
-        trackerScript = gameObject.GetComponentInParent<ActionTracker>();
+        localPlayer = gameObject.GetComponent<Player>();
     }
 
     void Update()
     {
         if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            movementScript.jump();
-            trackerScript.addAction(ActionType.JUMP);
+            localPlayer.movement.jump();
+            localPlayer.tracker.addAction(ActionType.JUMP);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
         {
-            movementScript.sprinting = true;
+            localPlayer.movement.sprinting = true;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
         {
-            movementScript.sprinting = false;
+            localPlayer.movement.sprinting = false;
         }
 
 
         if (Input.GetAxisRaw("Horizontal") == 0)
         {
-            movementScript.stop();
-            trackerScript.addAction(ActionType.STOP);
+            localPlayer.movement.stop();
+            localPlayer.tracker.addAction(ActionType.STOP);
         }
         else if (Input.GetAxisRaw("Horizontal") < -0.1f)
         {
-            movementScript.moveLeft();
-            trackerScript.addAction(ActionType.MOVE_LEFT);
+            localPlayer.movement.moveLeft();
+            localPlayer.tracker.addAction(ActionType.MOVE_LEFT);
         }
         else if (Input.GetAxisRaw("Horizontal") > 0.1f)
         {
-            movementScript.moveRight();
-            trackerScript.addAction(ActionType.MOVE_RIGHT);
+            localPlayer.movement.moveRight();
+            localPlayer.tracker.addAction(ActionType.MOVE_RIGHT);
         }
 
     }

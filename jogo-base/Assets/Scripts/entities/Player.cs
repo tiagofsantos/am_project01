@@ -3,29 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class Player : MonoBehaviour
 {
     public User user;
 
+    public Vitals vitals;
     public Character character;
-    private Vitals vitals;
-    private Inventory inventory;
+    public Inventory inventory;
+
+    public PlayerController controller;
+    public PlayerMovement movement;
+
+    public ActionReplay replay;
+    public ActionTracker tracker;
 
     private bool sprinting;
 
-    public Player(User user, Character character) {
-        init(user, character);
-    }
-    
-    public void init(User user, Character character)
+    void Start()
     {
-        this.character = character;
-        this.user = user;
+        vitals = gameObject.GetComponent<Vitals>();
+        inventory = gameObject.GetComponent<Inventory>();
 
-        vitals = new Vitals(character);
-        sprinting = false;
-        inventory = new Inventory();
+        //General script, all players have this.
+        movement = gameObject.GetComponentInParent<PlayerMovement>();
+
+        //Player script, only the local player has this.
+        controller = gameObject.GetComponentInParent<PlayerController>();
+        tracker = gameObject.GetComponentInParent<ActionTracker>();
+
+        //Shadow script, only the opponent player (shadow) has this.
+        replay = gameObject.GetComponentInParent<ActionReplay>();
     }
 
     void Update()
@@ -34,13 +41,6 @@ public class Player : MonoBehaviour
             Debug.Log("Alterar velocidade aqui");
         else
             vitals.restoreStamina();
-
-        vitals.Update();
-    }
-
-    public void stun()
-    {
-        vitals.stun();
     }
 
 }

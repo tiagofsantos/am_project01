@@ -1,12 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Character
 {
+    public string name;
 
-    private string name;
+    /* Níveis base do character */
     private Dictionary<Skill, int> skillSet;
+
+    /* Modificadores do character (Boosts temporários) */
+    private Dictionary<Skill, int> modifiers;
 
     private const int MAX_TOTAL_LEVEL = 15;
     public const int MAX_SKILL_LEVEL = 10;
@@ -17,16 +22,31 @@ public abstract class Character
         skillSet.Add(Skill.SPEED, 0);
         skillSet.Add(Skill.STRENGTH, 0);
         skillSet.Add(Skill.ENDURANCE, 0);
+
+        modifiers = new Dictionary<Skill, int>();
+        modifiers.Add(Skill.SPEED, 0);
+        modifiers.Add(Skill.STRENGTH, 0);
+        modifiers.Add(Skill.ENDURANCE, 0);
     }
 
-    public void setName(string name)
-    {
-        this.name = name;
-    }
-
+    /* Nível (falso/temporário) de um certo skill, incluindo modificadores (boosts). */ 
     public int getLevel(Skill skill)
     {
+        return skillSet[skill] + modifiers[skill];
+    }
+
+    /* Nível real de um certo skill, excluindo modificadores (boosts). */
+    public int getRealLevel(Skill skill)
+    {
         return skillSet[skill];
+    }
+
+    public void resetModifier(Skill skill) {
+        modifiers[skill] = 0;
+    }
+
+    public void setModifier(Skill skill, int value) {
+        modifiers[skill] = value;
     }
 
     /* Altera o nivel de um certo skill para o valor dado, verificando niveis máximos.*/
@@ -52,12 +72,13 @@ public abstract class Character
     /* Retorna a soma de todos os níveis (nível total) */
     private int totalSkillLevel()
     {
-
         int count = 0;
+
         foreach (KeyValuePair<Skill, int> entry in skillSet)
         {
             count += entry.Value;
         }
+
         return count;
     }
 }

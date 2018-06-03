@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class EntitySpawner : MonoBehaviour
+public class EntitySpawner
 {
     private const string PREFAB_PATH = "Assets/Prefabs/";
 
@@ -16,24 +16,28 @@ public class EntitySpawner : MonoBehaviour
     {
         playerSpawn = GameObject.Find("PlayerSpawn").transform;
     }
-
-    public GameObject spawnPlayer(Player player)
+    
+    public GameObject spawnPlayer(User user, Character character)
     {
         GameObject playerObject = createObject("Player.prefab", playerSpawn.transform);
+        playerObject.name = "Player (" + user.name + ")";
 
-        playerObject.AddComponent<Player>().init(player.user, player.character);
-        playerObject.name = "Player (" + player.user.name + ")";
+        Player player = playerObject.GetComponent<Player>();
+        player.character = character;
+        player.user = user;
 
         return playerObject;
     }
 
 
-    public GameObject spawnShadow(Player shadow)
+    public GameObject spawnShadow(User user, Character character)
     {
         GameObject shadowObject = createObject("Shadow.prefab", playerSpawn.transform);
+        shadowObject.name = "Shadow (" + user.name + ")";
 
-        shadowObject.AddComponent<Player>().init(shadow.user, shadow.character);
-        shadowObject.name = "Shadow (" + shadow.user.name + ")";
+        Player player = shadowObject.GetComponent<Player>();
+        player.character = character;
+        player.user = user;
 
         return shadowObject;
     }
@@ -41,7 +45,7 @@ public class EntitySpawner : MonoBehaviour
     private GameObject createObject(string filename, Transform spawn)
     {
         Object prefab = AssetDatabase.LoadAssetAtPath(PREFAB_PATH + filename, typeof(GameObject));
-        return Instantiate(prefab, spawn.position, spawn.rotation) as GameObject;
+        return GameObject.Instantiate(prefab, spawn.position, spawn.rotation) as GameObject;
     }
 
 }

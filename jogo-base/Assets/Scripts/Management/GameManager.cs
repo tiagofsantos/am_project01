@@ -5,44 +5,67 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private int testSessionId = 0;
-    private String testUsername = "Ruben";
 
-    public static Session session;
-    public static Session shadowSession;
-
-    public Player player;
-    public Player shadow;
-
-    public GameObject playerObj;
-    public GameObject shadowObj;
+    public static GameManager instance;
 
     private EntitySpawner spawner;
+    private SessionManager sessionManager;
+
+    private GameObject playerObject;
+    private GameObject opponentObject;
+
+    /* Test values */
+    private int testSessionId = 1;
+    private String testUsername = "Ruben";
+    private Character testCharacter = new Scout();
+
+    private Session testOpSession;
 
     void Awake()
     {
-        spawner = new EntitySpawner();
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(instance);
 
-        User ruben = new User(0, testUsername, "ruben.amendoeira@gmail.com", DateTime.ParseExact("06/12/1996", "dd/MM/yyyy", null), "teste123", "PT");
-        User hugo = new User(0, "Hugo", "hugobenfiquista@hotmail.com", DateTime.ParseExact("25/05/1997", "dd/MM/yyyy", null), "teste123", "PT");
-
-        player = new Player(ruben, new Scout());
-        shadow = new Player(hugo, new Scout());
-
-        playerObj = spawner.spawnPlayer(player);
-        shadowObj = spawner.spawnShadow(shadow);
-
-        session = new Session(1, player, shadow);
-        shadowSession = Session.load(testUsername, testSessionId);
-
-        ActionReplay replayScript = shadowObj.GetComponentInParent<ActionReplay>();
-        replayScript.actions = shadowSession.playerActions;
-
+        DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        spawner = new EntitySpawner();
+        sessionManager = new SessionManager();
+
+        User ruben = new User(0, testUsername, "ruben.amendoeira@gmail.com", DateTime.ParseExact("06/12/1996", "dd/MM/yyyy", null), "teste123", "PT");
+        User hugo = new User(1, "Hugo", "hugobenfiquista@live.com.pt", DateTime.ParseExact("25/05/1997", "dd/MM/yyyy", null), "teste123", "PT");
+
+        testOpSession = new Session(hugo, new Buster(), null);
+        testOpSession.actions.Add(new PlayerAction(ActionType.JUMP, 1.2f, 1));
+        testOpSession.actions.Add(new PlayerAction(ActionType.MOVE_LEFT, 2f, 1));
+        testOpSession.actions.Add(new PlayerAction(ActionType.JUMP, 2.5f, 1));
+
+        sessionManager.create(ruben, testCharacter, testOpSession); // sessionManager.load(ruben.name, testSessionId)
+
+        Session currentSession = sessionManager.getCurrentSession();
+        Session opponentSession = sessionManager.getOpponentSession();
+
+        playerObject = spawner.spawnPlayer(currentSession.user, currentSession.character);
+
+        if (opponentSession != null)
+        {
+            opponentObject = spawner.spawnShadow(opponentSession.user, opponentSession.character);
+
+            ActionReplay replay = opponentObject.GetComponent<ActionReplay>();
+            replay.actions = new List<PlayerAction>();
+            replay.actions.AddRange(opponentSession.actions);
+        }
+    }
 
     private void OnApplicationQuit()
     {
-        session.save(testUsername, playerObj.GetComponentInParent<ActionTracker>());
+        ActionTracker tracker = playerObject.GetComponent<ActionTracker>();
+        sessionManager.getCurrentSession().actions.AddRange(tracker.actions);
+
+        //sessionManager.save();
     }
 }
