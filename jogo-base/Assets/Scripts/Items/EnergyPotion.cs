@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnergyPotion : Item {
-    
+public class EnergyPotion : Item
+{
     public EnergyPotion()
     {
         id = spriteId = 0;
@@ -12,7 +12,8 @@ public class EnergyPotion : Item {
         name = "Energy Potion";
     }
 
-    public override void onConsume(Player player) {
+    public override void onConsume(Player player)
+    {
         player.character.setModifier(Skill.ENDURANCE, 5);
     }
 
@@ -20,5 +21,4 @@ public class EnergyPotion : Item {
     {
         player.character.setModifier(Skill.ENDURANCE, 0);
     }
-
 }

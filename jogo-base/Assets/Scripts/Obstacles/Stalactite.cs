@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Stalactite : MonoBehaviour
 {
-
     /* Tempo que demora até a estalactite começar a cair, em segundos */
     private const float TIME_BEFORE_FALL = 3f;
 
@@ -16,7 +15,8 @@ public class Stalactite : MonoBehaviour
 
     /* Bool que afirma se o objecto está a cair. 
      * A estalactite apenas cai quando activated é true.
-     * A variável fica true quando passa o tempo definido em TIME_BEFORE_FALL*/
+     * A variável fica true quando passa o tempo definido em TIME_BEFORE_FALL
+     */
     private bool activated;
 
     void Start()
@@ -27,12 +27,12 @@ public class Stalactite : MonoBehaviour
 
     void Update()
     {
-        // Se activated for true, o temporizador acabou, e o objecto começa a cair.
+        /* Se activated for true, o temporizador acabou, e o objecto começa a cair. */
         if (activated)
         {
             transform.Translate(Vector3.down * FALL_SPEED * Time.deltaTime, Space.World);
 
-            // Destroí o objecto se ele já estiver abaixo da DESTRUCTION_POSITION.
+            /* Destroí o objecto se ele já estiver abaixo da DESTRUCTION_POSITION. */
             if (this.transform.position.y <= DESTRUCTION_POSITION)
                 Destroy(this);
         }
@@ -40,8 +40,9 @@ public class Stalactite : MonoBehaviour
 
     /* Temporizador. 
      * Inicia activated a false, e depois de esperar pelos segundos definidos em TIME_BEFORE_FALL,
-     * aletera o valor da variável para true.*/
-    public IEnumerator timer()
+     * aletera o valor da variável para true.
+     */
+    private IEnumerator timer()
     {
         activated = false;
         yield return new WaitForSeconds(TIME_BEFORE_FALL);

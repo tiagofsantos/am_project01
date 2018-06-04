@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Sargent : Character
 {
-
     public Sargent()
     {
         name = "Sargent";
@@ -13,5 +12,4 @@ public class Sargent : Character
         setLevel(Skill.STRENGTH, 3);
         setLevel(Skill.ENDURANCE, 9);
     }
-
 }

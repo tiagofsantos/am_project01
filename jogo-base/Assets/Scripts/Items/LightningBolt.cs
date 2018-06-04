@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightningBolt : Item {
-    
+public class LightningBolt : Item
+{
     public LightningBolt()
     {
         id = spriteId = 1;
@@ -12,7 +12,8 @@ public class LightningBolt : Item {
         name = "Lightning Bolt";
     }
 
-    public override void onConsume(Player player) {
+    public override void onConsume(Player player)
+    {
         player.character.setModifier(Skill.SPEED, 5);
     }
 
@@ -20,5 +21,4 @@ public class LightningBolt : Item {
     {
         player.character.setModifier(Skill.SPEED, 0);
     }
-
 }

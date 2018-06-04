@@ -32,11 +32,4 @@ public class Player : MonoBehaviour
         //Shadow script, only the opponent player (shadow) has this.
         replay = gameObject.GetComponentInParent<ActionReplay>();
     }
-
-    void Update()
-    {
-        if (!movement.sprinting)
-            vitals.restoreStamina();
-    }
-
 }

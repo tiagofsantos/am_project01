@@ -12,5 +12,4 @@ public class Scout : Character
         setLevel(Skill.STRENGTH, 3);
         setLevel(Skill.ENDURANCE, 3);
     }
-
 }

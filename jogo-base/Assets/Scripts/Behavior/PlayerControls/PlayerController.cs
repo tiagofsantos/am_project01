@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour
             localPlayer.movement.sprinting = false;
         }
 
-
         if (Input.GetAxisRaw("Horizontal") == 0)
         {
             localPlayer.movement.stop();
@@ -45,7 +44,5 @@ public class PlayerController : MonoBehaviour
             localPlayer.movement.moveRight();
             localPlayer.tracker.addAction(ActionType.MOVE_RIGHT);
         }
-
     }
-
 }

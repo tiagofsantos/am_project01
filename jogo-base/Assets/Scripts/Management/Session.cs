@@ -17,7 +17,7 @@ public class Session
     public Session opponentSession;
 
     public List<PlayerAction> actions;
-    
+
     public Session(User user, Character character, Session opponentSession)
     {
         id = new System.Random().Next(999999);

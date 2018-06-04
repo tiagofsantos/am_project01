@@ -24,5 +24,4 @@ public class GroundCheck : MonoBehaviour {
     {
         playerMovement.grounded = false;
     }
-    
 }
