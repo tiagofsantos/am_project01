@@ -168,6 +168,8 @@ public class PlayerMovement : MonoBehaviour
     public void respawn()
     {
         body.transform.position = respawnPoint;
+
+        respawning = false;
     }
 
     /*Faz o jogador desaparecer e reaparecer no último checkpoint.*/
@@ -177,13 +179,12 @@ public class PlayerMovement : MonoBehaviour
         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
         Color color = renderer.material.color;
         float speed = 0.1f; // Percisa de 10 iterações
-        float wait = 0.1f; // Tempo que espera depois de cada iteração. Quando a resistência muda este valor muda, a speed fica sempre igual. formula = (0,1) - (resistencia / 100)
-
-        if (wait == 0)
+        float wait = (0.1f) - (localPlayer.character.getLevel(Skill.ENDURANCE) / 100f); // Tempo que espera depois de cada iteração. Quando a resistência muda este valor muda, a speed fica sempre igual. formula = (0,1) - (resistencia / 100)
+        if (wait < 0.01)
         {
             wait = 0.009f;
         }
-        
+
         //fade out
         while (color.a > 0)
         {
@@ -195,12 +196,13 @@ public class PlayerMovement : MonoBehaviour
 
             yield return new WaitForSeconds(wait); // Duração = wait / speed
         }
+
+
         body.velocity = Vector3.zero;
         body.angularVelocity = 0;
         //volta ao checkpoint
         respawn();
-
-        respawning = false; // O jogador volta a ganhar controlo da personagem quando esta volta ao checkpoint
+        
         //fade in
         while (color.a < 1)
         {
