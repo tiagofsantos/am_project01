@@ -33,7 +33,7 @@ public class Inventory : MonoBehaviour
 
             if (item.effectTimer >= item.effectDuration)
             {
-                item.onExpiration(localPlayer);
+                item.onExpire(localPlayer);
                 consumedItems.Remove(item);
             }
 

@@ -17,8 +17,6 @@ public class Player : MonoBehaviour
     public ActionReplay replay;
     public ActionTracker tracker;
 
-    private bool sprinting;
-
     void Start()
     {
         vitals = gameObject.GetComponent<Vitals>();
@@ -37,9 +35,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (sprinting)
-            Debug.Log("Alterar velocidade aqui");
-        else
+        if (!movement.sprinting)
             vitals.restoreStamina();
     }
 

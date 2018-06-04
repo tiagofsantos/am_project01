@@ -11,5 +11,5 @@ public abstract class Item {
     public int spriteId;
 
     public abstract void onConsume(Player player);
-    public abstract void onExpiration(Player player);
+    public abstract void onExpire(Player player);
 }
