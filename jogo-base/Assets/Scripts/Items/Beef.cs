@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightningBolt : Item {
+public class Beef : Item {
     
-    public LightningBolt()
+    public Beef()
     {
-        id = spriteId = 1;
+        id = spriteId = 2;
         effectTimer = 0;
         effectDuration = 3;
-        name = "Lightning Bolt";
+        name = "Beef";
     }
 
     public override void onConsume(Player player) {
-        player.character.setModifier(Skill.SPEED, 5);
+        player.character.setModifier(Skill.STRENGTH, 5);
     }
 
     public override void onExpire(Player player)
     {
-        player.character.setModifier(Skill.SPEED, 0);
+        player.character.setModifier(Skill.STRENGTH, 0);
     }
 
 }

@@ -16,7 +16,7 @@ public class EnergyPotion : Item {
         player.character.setModifier(Skill.ENDURANCE, 5);
     }
 
-    public override void onExpiration(Player player)
+    public override void onExpire(Player player)
     {
         player.character.setModifier(Skill.ENDURANCE, 0);
     }

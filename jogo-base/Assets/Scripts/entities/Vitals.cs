@@ -32,9 +32,7 @@ public class Vitals : MonoBehaviour
     {
         /* Se está stunned, decrescer o contador */
         if (isStunned())
-        {
             stunClock -= Time.deltaTime;
-        }
 
         /* Se o contador passou do limite minimo, igualar a 0 */
         if (stunClock < 0)

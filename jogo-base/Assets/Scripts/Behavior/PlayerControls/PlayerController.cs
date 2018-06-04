@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    /* O player ao qual este script está associado */
     private Player localPlayer;
 
     private void Start()

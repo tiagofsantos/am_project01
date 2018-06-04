@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     private GameObject opponentObject;
 
     /* Test values */
-    private int testSessionId = 1;
+    //private int testSessionId = 1;
     private String testUsername = "Ruben";
     private Character testCharacter = new Scout();
 

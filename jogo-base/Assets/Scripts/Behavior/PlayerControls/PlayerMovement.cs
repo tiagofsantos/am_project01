@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    /* O player ao qual este script está associado */
     public Player localPlayer;
 
     /* Velocidade máxima */
@@ -39,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
     /* Determina se o player está a correr */
     public bool sprinting;
 
+    /* Determina se o player está imune a projéteis (phasing = atravessa os projeteis) */
+    public bool phasing;
+
     void Start()
     {
         localPlayer = gameObject.GetComponent<Player>();
@@ -70,12 +74,17 @@ public class PlayerMovement : MonoBehaviour
     /* Move o jogador numa direção dita pelo offset (esquerda = -1 & direita = 1) e muda-lhe a direção.*/
     private void moveHorizontal(float offset)
     {
+        /* Apenas deixa o jogador se movimentar se possível */
+        if (respawning || localPlayer.vitals.isStunned())
+            return;
+
         /* Se o jogador mudar de direção, a velocidade volta a 0 */
         if (offset != direction)
         {
             stop();
             direction = offset;
         }
+
         body.velocity = new Vector2(speed() * offset, body.velocity.y);
         transform.localScale = new Vector3(offset, 1, 1);
     }
@@ -117,6 +126,11 @@ public class PlayerMovement : MonoBehaviour
         return 1 + ((float)localPlayer.character.getLevel(Skill.SPEED) / 50);
     }
 
+    private float jumpPowerModifier()
+    {
+        return 1 + ((float)localPlayer.character.getLevel(Skill.STRENGTH) / 25);
+    }
+
     /* Põe a velocidade horizontal a 0 */
     public void stop()
     {
@@ -125,22 +139,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void moveLeft()
     {
-        /* Apenas deixa o jogador se movimentar se possível */
-        if (!respawning)
-            moveHorizontal(-1);
+        moveHorizontal(-1);
     }
 
     public void moveRight()
     {
-        /* Apenas deixa o jogador se movimentar se possível */
-        if (!respawning)
-            moveHorizontal(1);
+        moveHorizontal(1);
     }
 
     public void jump()
     {
-        if (!respawning && grounded)
-            body.AddForce(Vector2.up * jumpPower);
+        if (respawning || !grounded || localPlayer.vitals.isStunned())
+            return;
+
+        body.AddForce(Vector2.up * jumpPower * jumpPowerModifier());
     }
 
     public void OnTriggerEnter2D(Collider2D other)
