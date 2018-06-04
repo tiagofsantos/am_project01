@@ -6,7 +6,7 @@ public class Star : Item
 {
     public Star()
     {
-        id = spriteId = 3;
+        id = 3;
         effectTimer = 0;
         effectDuration = 3;
         name = "Star";

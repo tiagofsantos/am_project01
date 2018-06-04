@@ -6,7 +6,7 @@ public class EnergyPotion : Item
 {
     public EnergyPotion()
     {
-        id = spriteId = 0;
+        id = 0;
         effectTimer = 0;
         effectDuration = 3;
         name = "Energy Potion";

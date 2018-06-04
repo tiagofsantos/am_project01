@@ -6,7 +6,7 @@ public class Beef : Item
 {
     public Beef()
     {
-        id = spriteId = 2;
+        id = 2;
         effectTimer = 0;
         effectDuration = 3;
         name = "Beef";
