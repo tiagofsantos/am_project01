@@ -183,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
         {
             wait = 0.009f;
         }
-
+        
         //fade out
         while (color.a > 0)
         {
@@ -197,15 +197,18 @@ public class PlayerMovement : MonoBehaviour
         }
         body.velocity = Vector3.zero;
         body.angularVelocity = 0;
-
         //volta ao checkpoint
         respawn();
 
         respawning = false; // O jogador volta a ganhar controlo da personagem quando esta volta ao checkpoint
-
         //fade in
         while (color.a < 1)
         {
+            if (respawning)
+            {
+                break;
+            }
+            
             color = renderer.material.color;
 
             color.a += speed;
