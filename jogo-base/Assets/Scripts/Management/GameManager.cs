@@ -67,4 +67,8 @@ public class GameManager : MonoBehaviour
 
         //sessionManager.save();
     }
+
+    public User getLocalUser() {
+        return sessionManager.getCurrentSession().user;
+    }
 }

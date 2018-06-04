@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Item
 {
-    public int id, spriteId, effectDuration;
+    public int id, effectDuration;
     public string name;
     public float effectTimer;
 

@@ -6,7 +6,7 @@ public class LightningBolt : Item
 {
     public LightningBolt()
     {
-        id = spriteId = 1;
+        id = 1;
         effectTimer = 0;
         effectDuration = 3;
         name = "Lightning Bolt";
