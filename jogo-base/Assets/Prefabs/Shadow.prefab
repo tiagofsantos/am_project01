@@ -27,8 +27,9 @@ GameObject:
   - component: {fileID: 114699866130023202}
   - component: {fileID: 114512471759352846}
   - component: {fileID: 114931964003329260}
+  - component: {fileID: 114346493122676040}
   m_Layer: 8
-  m_Name: Player
+  m_Name: Shadow
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,6 +156,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114346493122676040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1031576944739244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb26a868f4dd0a0418cb2e31fc144299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114512471759352846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,6 +193,7 @@ MonoBehaviour:
   movementSpeed: 6
   jumpPower: 700
   grounded: 0
+  respawning: 0
   sprinting: 0
 --- !u!114 &114803822267471950
 MonoBehaviour:
@@ -256,7 +269,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300016, guid: 825a7f0bec38e8f4db509d038448112b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.491}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
