@@ -27,6 +27,8 @@ GameObject:
   - component: {fileID: 114699866130023202}
   - component: {fileID: 114512471759352846}
   - component: {fileID: 114931964003329260}
+  - component: {fileID: 114396357518522770}
+  - component: {fileID: 114128768324120640}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -155,6 +157,28 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114128768324120640
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1031576944739244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f21d59f32447e4bb24ce6ed3f24934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114396357518522770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1031576944739244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49822e51460c5b469cf04a4efed81a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114512471759352846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,6 +205,7 @@ MonoBehaviour:
   movementSpeed: 6
   jumpPower: 700
   grounded: 0
+  respawning: 0
   sprinting: 0
 --- !u!114 &114803822267471950
 MonoBehaviour:
