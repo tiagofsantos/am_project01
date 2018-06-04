@@ -30,6 +30,10 @@ public class Vitals : MonoBehaviour
 
     void Update()
     {
+        /* Se o player não está a correr, restaurar stamina */
+        if (!localPlayer.movement.sprinting)
+            restoreStamina();
+
         /* Se está stunned, decrescer o contador */
         if (isStunned())
             stunClock -= Time.deltaTime;
@@ -78,5 +82,4 @@ public class Vitals : MonoBehaviour
     {
         return ((Character.MAX_SKILL_LEVEL - localPlayer.character.getLevel(Skill.ENDURANCE)) / 2) + 2;
     }
-
 }

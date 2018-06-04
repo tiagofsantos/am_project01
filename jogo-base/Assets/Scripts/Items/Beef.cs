@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Beef : Item {
-    
+public class Beef : Item
+{
     public Beef()
     {
         id = spriteId = 2;
@@ -12,7 +12,8 @@ public class Beef : Item {
         name = "Beef";
     }
 
-    public override void onConsume(Player player) {
+    public override void onConsume(Player player)
+    {
         player.character.setModifier(Skill.STRENGTH, 5);
     }
 
@@ -20,5 +21,4 @@ public class Beef : Item {
     {
         player.character.setModifier(Skill.STRENGTH, 0);
     }
-
 }

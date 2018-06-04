@@ -4,10 +4,8 @@ using UnityEngine;
 
 public enum ActionType
 {
-
     MOVE_RIGHT,
     MOVE_LEFT,
     JUMP,
     STOP
-
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-
     private Vector2 velocity;
     public float smoothTimeY;
     public float smoothTimeX;

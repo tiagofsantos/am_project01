@@ -21,6 +21,5 @@ public class Star : Item
     {
         player.movement.phasing = false;
     }
-
 }
 

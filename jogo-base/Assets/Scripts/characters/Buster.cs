@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Buster : Character
 {
-
     public Buster()
     {
         name = "Buster";
@@ -13,5 +12,4 @@ public class Buster : Character
         setLevel(Skill.STRENGTH, 9);
         setLevel(Skill.ENDURANCE, 3);
     }
-
 }

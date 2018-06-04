@@ -13,7 +13,10 @@ public abstract class Character
     /* Modificadores do character (Boosts temporários) */
     private Dictionary<Skill, int> modifiers;
 
+    /* Nível máximo total (soma dos 3 atributos) */
     private const int MAX_TOTAL_LEVEL = 15;
+
+    /* Nível máximo de cada atributo */
     public const int MAX_SKILL_LEVEL = 10;
 
     public Character()
@@ -41,10 +44,12 @@ public abstract class Character
         return skillSet[skill];
     }
 
+    /* Remover boost de um certo skill */
     public void resetModifier(Skill skill) {
         modifiers[skill] = 0;
     }
 
+    /* Adicionar boost a um certo skill */
     public void setModifier(Skill skill, int value) {
         modifiers[skill] = value;
     }

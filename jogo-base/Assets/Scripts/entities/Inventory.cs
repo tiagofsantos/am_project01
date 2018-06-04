@@ -28,15 +28,15 @@ public class Inventory : MonoBehaviour
     {
         foreach (Item item in consumedItems)
         {
-
+            /* Aumentar tempo ao contador do item */
             item.effectTimer += Time.deltaTime;
 
+            /* Se o tempo passar do limite, chamar o onExpire e remover o item dos consumidos (destruir) */
             if (item.effectTimer >= item.effectDuration)
             {
                 item.onExpire(localPlayer);
                 consumedItems.Remove(item);
             }
-
         }
     }
 
@@ -75,12 +75,12 @@ public class Inventory : MonoBehaviour
 
         if (items.Contains(item))
         {
+            /* Consumir item */
             item.onConsume(localPlayer);
 
+            /* Transferir o item dos items disponiveis para os items consumidos */
             consumedItems.Add(item);
             items.Remove(item);
         }
-
     }
-
 }
