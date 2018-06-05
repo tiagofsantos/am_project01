@@ -12,7 +12,10 @@ public class Vitals : MonoBehaviour
     private const int MAX_STAMINA = 100;
 
     /* O multiplier a adicionar por cada game tick, quanto maior, mais rápido a stamina regenera */
-    private const float STAMINA_MULTIPLIER = 0.8f;
+    private const float STAMINA_RESTORE_MULTIPLIER = .35f;
+
+    /* O multiplier a reduzir por cada game tick em sprint, quanto maior, mais rápido se gasta a stamina */
+    private const float STAMINA_MULTIPLIER = 4f;
 
     /* O nível de stamina do player (0 - MAX_STAMINA) */
     private float stamina;
@@ -31,7 +34,9 @@ public class Vitals : MonoBehaviour
     void Update()
     {
         /* Se o player não está a correr, restaurar stamina */
-        if (!localPlayer.movement.sprinting)
+        if (localPlayer.movement.sprinting)
+            reduceStamina();
+        else
             restoreStamina();
 
         /* Se está stunned, decrescer o contador */
@@ -46,7 +51,7 @@ public class Vitals : MonoBehaviour
     /* Restaura a stamina todos os game ticks (sobe a stamina por uma pequena quantidade) */
     public void restoreStamina()
     {
-        float amount = localPlayer.character.getLevel(Skill.ENDURANCE) * STAMINA_MULTIPLIER * Time.deltaTime;
+        float amount = 0.065f + (localPlayer.character.getLevel(Skill.ENDURANCE) * STAMINA_RESTORE_MULTIPLIER * Time.deltaTime);
 
         /* ignorar quantidades negativas ou zero */
         if (amount <= 0)
@@ -57,6 +62,21 @@ public class Vitals : MonoBehaviour
             stamina = MAX_STAMINA;
         else
             stamina += amount;
+    }
+
+    public void reduceStamina()
+    {
+        float amount = 0.06f + (localPlayer.character.getLevel(Skill.ENDURANCE) * Time.deltaTime * STAMINA_MULTIPLIER);
+
+        /* ignorar quantidades negativas ou zero */
+        if (amount <= 0)
+            return;
+
+        /* limitar a stamina a 100 */
+        if (stamina - amount < 0)
+            stamina = 0;
+        else
+            stamina -= amount;
     }
 
     /* Recomeça o contador de stun para o valor dado pela fórmula stunPenalty */
