@@ -10,6 +10,7 @@ public class Session
     public int id;
 
     private DateTime date;
+
     public float elapsedTime;
 
     public User user;
@@ -18,21 +19,20 @@ public class Session
 
     public List<PlayerAction> actions;
 
-    public Session(User user, Character character, Session opponentSession)
-    {
-        id = new System.Random().Next(999999);
-        date = DateTime.Now;
-        actions = new List<PlayerAction>();
-        elapsedTime = 0;
 
+    public Session(int id, User user, Character character, Session opponentSession) :
+        this(id, user, character, opponentSession, new List<PlayerAction>()){ }
+    
+
+    public Session(int id, User user, Character character, Session opponentSession, List<PlayerAction> actions)
+    {
+        this.id = id;
+        date = DateTime.Now;
+        this.actions = actions;
+        elapsedTime = 0;
         this.user = user;
         this.character = character;
         this.opponentSession = opponentSession;
     }
 
-    public void end()
-    {
-        TimeSpan elapsed = DateTime.Now - date;
-        elapsedTime = elapsed.Milliseconds;
-    }
 }
