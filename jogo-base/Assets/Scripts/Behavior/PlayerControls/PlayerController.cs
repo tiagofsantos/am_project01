@@ -20,6 +20,21 @@ public class PlayerController : MonoBehaviour
             localPlayer.tracker.addAction(ActionType.JUMP);
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            localPlayer.inventory.consume(0);
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2)) {
+            localPlayer.inventory.consume(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            localPlayer.inventory.consume(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            localPlayer.inventory.consume(3);
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
         {
             localPlayer.movement.sprinting = true;

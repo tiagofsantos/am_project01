@@ -6,7 +6,7 @@ public class Star : Item
 {
     public Star()
     {
-        id = 3;
+        id = 2;
         effectTimer = 0;
         effectDuration = 3;
         name = "Star";

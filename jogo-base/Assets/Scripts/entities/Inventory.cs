@@ -26,6 +26,9 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
+        /* Para prevenir modificações concurrentes */
+        Item toRemove = null;
+
         foreach (Item item in consumedItems)
         {
             /* Aumentar tempo ao contador do item */
@@ -35,9 +38,12 @@ public class Inventory : MonoBehaviour
             if (item.effectTimer >= item.effectDuration)
             {
                 item.onExpire(localPlayer);
-                consumedItems.Remove(item);
+                toRemove = item;
             }
         }
+
+        if (toRemove != null)
+            consumedItems.Remove(toRemove);
     }
 
     public int quantityOf(int id)
@@ -81,16 +87,23 @@ public class Inventory : MonoBehaviour
         items.Add(item);
     }
 
-    /* Consome um item num dado índice (usa método consume(Item)), verificando se o índice é válido e dentro dos limites. */
-    public void consume(int index)
+    /* Consome um item num dado id (usa método consume(Item))*/
+    public void consume(int id)
     {
-        if (index < 0 || items.Count <= index)
+        /* Para prevenir modificações concurrentes */
+        Item toConsume = null;
+
+        foreach (Item item in items)
         {
-            Debug.LogError("Item inválido");
-            return;
+            if (item.id == id)
+            {
+                toConsume = item;
+                break;
+            }
         }
 
-        consume(items[index]);
+        consume(toConsume);
+
     }
 
     /* Consome um item dado, removendo-o da lista e evocando o seu evento de consumo. */
