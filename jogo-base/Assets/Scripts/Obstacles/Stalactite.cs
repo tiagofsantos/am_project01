@@ -34,7 +34,22 @@ public class Stalactite : MonoBehaviour
 
             /* Destroí o objecto se ele já estiver abaixo da DESTRUCTION_POSITION. */
             if (this.transform.position.y <= DESTRUCTION_POSITION)
-                Destroy(this);
+                Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.gameObject.GetComponent<Player>();
+            
+            if (player.movement.respawning || player.movement.phasing)
+            {
+                return;
+            }
+
+            StartCoroutine(player.movement.fadeout());
         }
     }
 

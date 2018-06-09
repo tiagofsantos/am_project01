@@ -19,14 +19,14 @@ public class Spikes : MonoBehaviour
              */
             if (!player.movement.respawning)
             {
-                StartCoroutine(player.movement.fade());
+                StartCoroutine(player.movement.fadeout());
                 knockback(other);
             }
         }
     }
 
     public void knockback(Collider2D col)
-    {
+    { 
         float speed = 350;
 
         Vector3 direction = col.transform.position - transform.position;
