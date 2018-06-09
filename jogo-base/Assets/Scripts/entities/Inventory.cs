@@ -40,6 +40,32 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public int quantityOf(int id)
+    {
+        int count = 0;
+
+        foreach (Item item in items)
+        {
+            if (item.id == id)
+                count++;
+        }
+
+        return count;
+    }
+
+    public int quantityOf(string name)
+    {
+        int count = 0;
+
+        foreach (Item item in items)
+        {
+            if (item.name.Equals(name))
+                count++;
+        }
+
+        return count;
+    }
+
     /* Adiciona um item ao inventário, verificando o limite máximo de items. */
     public void add(Item item)
     {

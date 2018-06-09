@@ -18,7 +18,7 @@ public class Vitals : MonoBehaviour
     private const float STAMINA_MULTIPLIER = 4f;
 
     /* O nível de stamina do player (0 - MAX_STAMINA) */
-    private float stamina;
+    public float stamina;
 
     /* O contador de stun, 0 = !stunned */
     private float stunClock;
@@ -38,6 +38,11 @@ public class Vitals : MonoBehaviour
             reduceStamina();
         else
             restoreStamina();
+
+        if (stamina == 0 && localPlayer.movement.sprinting)
+        {
+            localPlayer.movement.sprinting = false;
+        }
 
         /* Se está stunned, decrescer o contador */
         if (isStunned())
