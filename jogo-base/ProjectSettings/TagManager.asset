@@ -7,6 +7,12 @@ TagManager:
   - Ground
   - Checkpoint
   - ItemSpawn
+  - StaminaSlider
+  - StaminaFill
+  - PotionItemQuantity
+  - BeefItemQuantity
+  - StarItemQuantity
+  - BoltItemQuantity
   layers:
   - Default
   - TransparentFX

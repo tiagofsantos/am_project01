@@ -14,12 +14,22 @@ public class PlayerHUD : MonoBehaviour
     private Slider staminaSlider;
     private Image staminaFill;
 
+    private Text potionQuantity;
+    private Text beefQuantity;
+    private Text starQuantity;
+    private Text boltQuantity;
+
     void Start()
     {
         localPlayer = gameObject.GetComponent<Player>();
 
         staminaSlider = GameObject.FindGameObjectWithTag("StaminaSlider").GetComponent<Slider>();
         staminaFill = GameObject.FindGameObjectWithTag("StaminaFill").GetComponent<Image>();
+
+        potionQuantity = GameObject.FindGameObjectWithTag("PotionItemQuantity").GetComponent<Text>();
+        beefQuantity = GameObject.FindGameObjectWithTag("BeefItemQuantity").GetComponent<Text>();
+        starQuantity = GameObject.FindGameObjectWithTag("StarItemQuantity").GetComponent<Text>();
+        boltQuantity = GameObject.FindGameObjectWithTag("BoltItemQuantity").GetComponent<Text>();
 
         defaultStaminaColor = new Color(staminaFill.color.r, staminaFill.color.g, staminaFill.color.b, 1f); ;
         sprintStaminaColor = new Color(staminaFill.color.r, staminaFill.color.g, staminaFill.color.b, .5f); ;
@@ -29,6 +39,13 @@ public class PlayerHUD : MonoBehaviour
     {
         staminaSlider.value = localPlayer.vitals.stamina;
         staminaFill.color = localPlayer.movement.sprinting ? sprintStaminaColor : defaultStaminaColor;
+
+        Inventory inv = localPlayer.inventory;
+
+        potionQuantity.text = inv.quantityOf("Energy Potion") + "";
+        beefQuantity.text = inv.quantityOf("Beef") + "";
+        starQuantity.text = inv.quantityOf("Star") + "";
+        boltQuantity.text = inv.quantityOf("Lightning Bolt") + "";
     }
 
 }
