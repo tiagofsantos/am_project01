@@ -60,6 +60,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        sessionManager.getCurrentSession().elapsedTime += Time.deltaTime;
+    }
+
     private void OnApplicationQuit()
     {
         ActionTracker tracker = playerObject.GetComponent<ActionTracker>();
@@ -70,5 +75,9 @@ public class GameManager : MonoBehaviour
 
     public User getLocalUser() {
         return sessionManager.getCurrentSession().user;
+    }
+
+    public Session getLocalSession() {
+        return sessionManager.getCurrentSession();
     }
 }

@@ -13,6 +13,7 @@ TagManager:
   - BeefItemQuantity
   - StarItemQuantity
   - BoltItemQuantity
+  - TimeElapsed
   layers:
   - Default
   - TransparentFX

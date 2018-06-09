@@ -19,6 +19,8 @@ public class PlayerHUD : MonoBehaviour
     private Text starQuantity;
     private Text boltQuantity;
 
+    private Text elapsedTime;
+
     void Start()
     {
         localPlayer = gameObject.GetComponent<Player>();
@@ -30,6 +32,8 @@ public class PlayerHUD : MonoBehaviour
         beefQuantity = GameObject.FindGameObjectWithTag("BeefItemQuantity").GetComponent<Text>();
         starQuantity = GameObject.FindGameObjectWithTag("StarItemQuantity").GetComponent<Text>();
         boltQuantity = GameObject.FindGameObjectWithTag("BoltItemQuantity").GetComponent<Text>();
+
+        elapsedTime = GameObject.FindGameObjectWithTag("TimeElapsed").GetComponent<Text>();
 
         defaultStaminaColor = new Color(staminaFill.color.r, staminaFill.color.g, staminaFill.color.b, 1f); ;
         sprintStaminaColor = new Color(staminaFill.color.r, staminaFill.color.g, staminaFill.color.b, .5f); ;
@@ -46,6 +50,14 @@ public class PlayerHUD : MonoBehaviour
         beefQuantity.text = inv.quantityOf("Beef") + "";
         starQuantity.text = inv.quantityOf("Star") + "";
         boltQuantity.text = inv.quantityOf("Lightning Bolt") + "";
+
+        elapsedTime.text = formatTimer(GameManager.instance.getLocalSession().elapsedTime);
     }
 
+    private string formatTimer(float timer)
+    {
+        string minutes = Mathf.Floor(timer / 60).ToString("00");
+        string seconds = Mathf.Floor(timer % 60).ToString("00");
+        return minutes + ":" + seconds;
+    }
 }

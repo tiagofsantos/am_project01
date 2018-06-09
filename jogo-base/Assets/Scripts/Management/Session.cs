@@ -10,7 +10,7 @@ public class Session
     public int id;
 
     private DateTime date;
-    private float elapsedTime;
+    public float elapsedTime;
 
     public User user;
     public Character character;
@@ -23,6 +23,7 @@ public class Session
         id = new System.Random().Next(999999);
         date = DateTime.Now;
         actions = new List<PlayerAction>();
+        elapsedTime = 0;
 
         this.user = user;
         this.character = character;
