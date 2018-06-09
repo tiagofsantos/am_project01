@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     public PlayerController controller;
     public PlayerMovement movement;
 
+    public PlayerHUD hud;
+
     public ActionReplay replay;
     public ActionTracker tracker;
 
@@ -28,6 +30,7 @@ public class Player : MonoBehaviour
         //Player script, only the local player has this.
         controller = gameObject.GetComponentInParent<PlayerController>();
         tracker = gameObject.GetComponentInParent<ActionTracker>();
+        hud = gameObject.GetComponent<PlayerHUD>();
 
         //Shadow script, only the opponent player (shadow) has this.
         replay = gameObject.GetComponentInParent<ActionReplay>();
