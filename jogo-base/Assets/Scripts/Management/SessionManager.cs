@@ -6,21 +6,9 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SessionManager : MonoBehaviour
+public class SessionManager 
 {
     private Session currentSession;
-
-    public static SessionManager instance;
-
-    void Awake()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(instance);
-
-        DontDestroyOnLoad(gameObject);
-    }
 
     public void create(int id,User user, Character character, Session opponentSession)
     {
@@ -45,7 +33,7 @@ public class SessionManager : MonoBehaviour
     private List<PlayerAction> getPlayerActions(int sessionID)
     {
         List<PlayerAction> actions = new List<PlayerAction>() ;
-        Dictionary<string, object> actionsDic = ServerHandler.instance.request("/actions/" + sessionID);
+        Dictionary<string, object> actionsDic = GameManager.instance.serverManager.request("/actions/" + sessionID);
 
         if (actionsDic == null || actionsDic["result"].ToString() == false.ToString())
             return null;
@@ -62,12 +50,11 @@ public class SessionManager : MonoBehaviour
         }
 
         return actions;
-
     }
 
     private User getUSerFromDB(int idUser){
 
-        Dictionary<string, object> userDic = ServerHandler.instance.request("/users/" + idUser);
+        Dictionary<string, object> userDic = GameManager.instance.serverManager.request("/users/" + idUser);
 
         if (userDic == null || userDic["result"].ToString() == false.ToString())
             return null;
@@ -86,17 +73,11 @@ public class SessionManager : MonoBehaviour
 
 
     private Session getSessionFromDB(int id, bool isAgainstSession) {
-        Dictionary<string, object> sessionDic = ServerHandler.instance.request("/sessions/" + id);
+        Dictionary<string, object> sessionDic = GameManager.instance.serverManager.request("/sessions/" + id);
         if (sessionDic == null ||  sessionDic["result"].ToString() == false.ToString())
             return null;
    
         Dictionary<string, object> sessionInformation = ((List<Dictionary<string, object>>)sessionDic["content"])[0];
-
-        Dictionary<string, object> characterDic = ServerHandler.instance.request("/characters/" + sessionInformation["idPersonagem"]);
-        if (characterDic == null || characterDic["result"].ToString() == false.ToString())
-            return null;
-
-        Dictionary<string, object> characterInformation = ((List<Dictionary<string, object>>)characterDic["content"])[0]; 
 
         User user=getUSerFromDB(int.Parse(sessionInformation["idUtilizador"].ToString()));
 
@@ -107,20 +88,20 @@ public class SessionManager : MonoBehaviour
 
         List<PlayerAction> playerActions = getPlayerActions(id);
 
-        Session session = new Session(int.Parse(sessionInformation["idSessao"].ToString()),user, getCharacter(characterInformation["nome"].ToString(), int.Parse(characterInformation["idPersonagem"].ToString())), sessionAgainst, playerActions);
+        Session session = new Session(int.Parse(sessionInformation["idSessao"].ToString()),user, getCharacter(sessionInformation["personagem"].ToString()), sessionAgainst, playerActions);
         return session;
    }
 
 
-    private Character getCharacter(String name,int id)
+    private Character getCharacter(String name)
     {
         switch (name)
         {
-            case "Scout":return new Scout(id);
-            case "Buster": return new Buster(id);
-            case "Sargent": return new Sargent(id);
+            case "Scout":return new Scout();
+            case "Buster": return new Buster();
+            case "Sargent": return new Sargent();
+            default: return new Scout();
         }
-        return new Scout(id);
     }
 
 
@@ -133,14 +114,13 @@ public class SessionManager : MonoBehaviour
         form.AddField("date", date);
         form.AddField("level", 1.ToString());
         form.AddField("opponentSession", ((session.opponentSession != null) ? session.opponentSession.id : -1).ToString());
-        form.AddField("character", session.character.getID().ToString());
+        form.AddField("character", session.character.name);
         form.AddField("userID", session.user.id.ToString());
         return form;
     }
 
     private WWWForm actionsToWWWForm(PlayerAction action,int sessionID)
-    {
-        
+    {      
         WWWForm form = new WWWForm();
         form.AddField("action", action.type.ToString());
         form.AddField("timestamp", action.timestamp.ToString());
@@ -153,7 +133,7 @@ public class SessionManager : MonoBehaviour
     public void save()
     {
         WWWForm body = sectionToWWWForm(currentSession);
-        Dictionary<string, object>  dic = ServerHandler.instance.postRequest("/sessions", body);
+        Dictionary<string, object>  dic = GameManager.instance.serverManager.postRequest("/sessions", body);
         if(dic==null)
             Debug.Log("Não guardado");
         else
@@ -167,7 +147,7 @@ public class SessionManager : MonoBehaviour
 
         for (int i = 0; i < actions.Count;i++){
             WWWForm actionBody = actionsToWWWForm(actions[i], currentSession.id);
-            Dictionary<string, object> dicAction = ServerHandler.instance.postRequest("/actions", actionBody);
+            Dictionary<string, object> dicAction = GameManager.instance.serverManager.postRequest("/actions", actionBody);
             if(dicAction==null)
                 Debug.Log("Não guardado");
             else

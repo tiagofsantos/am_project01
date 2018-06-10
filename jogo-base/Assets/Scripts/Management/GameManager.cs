@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    private EntitySpawner spawner;
-    private SessionManager sessionManager;
-    private ServerHandler serverManager;
+    public EntitySpawner spawner;
+    public SessionManager sessionManager;
+    public ServerHandler serverManager;
 
     private GameObject playerObject;
     private GameObject opponentObject;
@@ -34,14 +34,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        serverManager = ServerHandler.instance;
-        spawner =  EntitySpawner.instance;
-        sessionManager =  SessionManager.instance;
+        serverManager = new ServerHandler();
+        spawner =  new EntitySpawner();
+        sessionManager = new SessionManager();
 
         User ruben = new User(2, testUsername, "ruben.amendoeira@gmail.com", DateTime.ParseExact("06/12/1996", "dd/MM/yyyy", null), "teste123", "PT");
         User hugo = new User(1, "Hugo", "hugobenfiquista@live.com.pt", DateTime.ParseExact("25/05/1997", "dd/MM/yyyy", null), "teste123", "PT");
 
-        testOpSession = new Session(1,hugo, new Buster(2), null);
+        testOpSession = new Session(1,hugo, new Buster(), null);
 
         testOpSession.actions.Add(new PlayerAction(ActionType.JUMP, 1.2f, 1));
         testOpSession.actions.Add(new PlayerAction(ActionType.MOVE_LEFT, 2f, 1));
@@ -63,8 +63,6 @@ public class GameManager : MonoBehaviour
             replay.actions = new List<PlayerAction>();
             replay.actions.AddRange(opponentSession.actions);
         }
-
-        
     }
 
     void Update()

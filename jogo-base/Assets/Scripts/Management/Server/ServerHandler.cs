@@ -4,21 +4,10 @@ using System.Linq;
 using System.Timers;
 using UnityEngine;
 
-public class ServerHandler : MonoBehaviour
+public class ServerHandler 
 {
     private static string path = "localhost:";
     private static string port = "8080";
-    public static ServerHandler instance;
-
-    void Awake()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(instance);
-
-        DontDestroyOnLoad(gameObject);
-    }
 
     public Dictionary<string, object> request(string endpoint)
     {
@@ -29,26 +18,18 @@ public class ServerHandler : MonoBehaviour
         //StartCoroutine(WaitForRequest(www));
         
         return parseToDicionary(www.text);
-
-
     }
 
     public Dictionary<string, object> postRequest(string endpoint, WWWForm body)
     {
-        //Hashtable postHeader = new Hashtable();
-        //postHeader.Add("Content-Type", "application/json");
-
         body.headers["Content-Type"]= "application/json";
-
         WWW www = new WWW(path + port + endpoint, body);
-
         WaitForSeconds w;
+
         while (!www.isDone)
             w = new WaitForSeconds(0.1f);
-        //StartCoroutine(WaitForRequest(www));
 
         return parseFromPostToDicionary(www.text);
-
     }
 
 
@@ -97,23 +78,4 @@ public class ServerHandler : MonoBehaviour
 
         return mainDicionary;
     }
-
-
-    private Hashtable getHeaders(Methods method)
-    {
-        Hashtable headers = new Hashtable();
-        switch (method)
-        {
-            case Methods.POST:
-                headers.Add("Content-Type", "Application/json");
-                break;
-            case Methods.GET:
-                break;
-            default:
-                break;
-        }
-        return headers;
-
-    }
-
 }

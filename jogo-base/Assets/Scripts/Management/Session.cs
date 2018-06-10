@@ -8,17 +8,12 @@ using UnityEngine;
 public class Session
 {
     public int id;
-
-    private DateTime date;
-
+    public DateTime date;
     public float elapsedTime;
-
     public User user;
     public Character character;
     public Session opponentSession;
-
     public List<PlayerAction> actions;
-
 
     public Session(int id, User user, Character character, Session opponentSession) :
         this(id, user, character, opponentSession, new List<PlayerAction>()){ }
