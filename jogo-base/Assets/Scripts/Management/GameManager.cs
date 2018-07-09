@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum GameState { MENU, INGAME }
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -14,11 +16,15 @@ public class GameManager : MonoBehaviour
     private GameObject playerObject;
     private GameObject opponentObject;
 
-    /* Test values */
-    //private int testSessionId = 1;
-    private String testUsername = "Ruben";
+    public User userLogged;
+    public GameType gameType;
+    public User userAgainst;
+    public int levelChoosed;
+    public Character characterChoosed;
 
-    private Character testCharacter = new Scout();
+    private GameState state;
+  
+    /* Test values */
 
     private Session testOpSession;
 
@@ -34,20 +40,24 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        serverManager = new ServerHandler();
+        state = GameState.MENU;
+        userAgainst = null;
+        characterChoosed = null;
+        serverManager = new ServerHandler();    
+    }
+
+    public void playMulti()
+    {   
         spawner =  new EntitySpawner();
         sessionManager = new SessionManager();
-
-        User ruben = new User(2, testUsername, "ruben.amendoeira@gmail.com", DateTime.ParseExact("06/12/1996", "dd/MM/yyyy", null), "teste123", "PT");
-        User hugo = new User(1, "Hugo", "hugobenfiquista@live.com.pt", DateTime.ParseExact("25/05/1997", "dd/MM/yyyy", null), "teste123", "PT");
-
-        testOpSession = new Session(1,hugo, new Buster(), null);
+        
+        testOpSession = new Session(1, userAgainst , new Buster(), null);
 
         testOpSession.actions.Add(new PlayerAction(ActionType.JUMP, 1.2f, 1));
         testOpSession.actions.Add(new PlayerAction(ActionType.MOVE_LEFT, 2f, 1));
         testOpSession.actions.Add(new PlayerAction(ActionType.JUMP, 2.5f, 1));
 
-        sessionManager.create(2,ruben, testCharacter, testOpSession);
+        sessionManager.create(2, userLogged, characterChoosed, testOpSession);
         sessionManager.load(2);
        
         Session currentSession = sessionManager.getCurrentSession();
@@ -63,18 +73,31 @@ public class GameManager : MonoBehaviour
             replay.actions = new List<PlayerAction>();
             replay.actions.AddRange(opponentSession.actions);
         }
+        state = GameState.INGAME;
+
+    }
+
+    public void playSolo()
+    {
+        Debug.Log("Completar");
     }
 
     void Update()
     {
-        sessionManager.getCurrentSession().elapsedTime += Time.deltaTime;
+        if (state == GameState.INGAME)
+        {
+            sessionManager.getCurrentSession().elapsedTime += Time.deltaTime;
+        }
     }
 
     private void OnApplicationQuit()
     {
-        ActionTracker tracker = playerObject.GetComponent<ActionTracker>();
-        sessionManager.getCurrentSession().actions.AddRange(tracker.actions);
-        sessionManager.save();
+        if (state == GameState.INGAME)
+        {
+            ActionTracker tracker = playerObject.GetComponent<ActionTracker>();
+            sessionManager.getCurrentSession().actions.AddRange(tracker.actions); 
+            sessionManager.save();
+        }
     }
 
     public User getLocalUser() {
@@ -84,5 +107,6 @@ public class GameManager : MonoBehaviour
     public Session getLocalSession() {
         return sessionManager.getCurrentSession();
     }
+
 
 }

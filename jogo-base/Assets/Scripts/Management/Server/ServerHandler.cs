@@ -15,21 +15,20 @@ public class ServerHandler
         WaitForSeconds w;
         while (!www.isDone)
             w = new WaitForSeconds(0.1f);
-        //StartCoroutine(WaitForRequest(www));
         
         return parseToDicionary(www.text);
     }
 
     public Dictionary<string, object> postRequest(string endpoint, WWWForm body)
     {
-        body.headers["Content-Type"]= "application/json";
+        body.headers["Content-Type"] = "application/json";
         WWW www = new WWW(path + port + endpoint, body);
         WaitForSeconds w;
 
         while (!www.isDone)
             w = new WaitForSeconds(0.1f);
 
-        return parseFromPostToDicionary(www.text);
+        return parseToDicionary(www.text);
     }
 
 
@@ -46,8 +45,14 @@ public class ServerHandler
         List<Dictionary<string, object>> contentDicionary = new List<Dictionary<string, object>>();
         List<JSONObject> information = jsonObject.list[1].list;
 
-        if (information.Count == 0)
+        if (information == null && jsonObject.list[1] == null || information != null && information.Count == 0)
+        {
             return null;
+        }
+        else if (information == null)
+        {
+            mainDicionary.Add("content", jsonObject.list[1]);
+        }
         else
         {
             for (int x = 0; x < information.Count; x++)
