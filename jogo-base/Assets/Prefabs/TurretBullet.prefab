@@ -20,9 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4942582951957346}
   - component: {fileID: 50028297375058070}
-  - component: {fileID: 114849420204554354}
   - component: {fileID: 61335149100295676}
   - component: {fileID: 212029704220918946}
+  - component: {fileID: 114412134560623896}
   m_Layer: 0
   m_Name: TurretBullet
   m_TagString: TurretBullet
@@ -79,8 +79,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.1125, y: 1.11}
-    newSize: {x: 1.1125, y: 1.11}
+    oldSize: {x: 0.98888886, y: 0.9866667}
+    newSize: {x: 0.98888886, y: 0.9866667}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -88,7 +88,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114849420204554354
+--- !u!114 &114412134560623896
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -96,10 +96,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1330452304534762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4081a7bc119e23a4195af4c5a73a62e1, type: 3}
+  m_Script: {fileID: 11500000, guid: fee2e111af4cefb47ab4cc2dce07fadc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawnOrigin: {fileID: 0}
+  renderer: {fileID: 0}
+  hitPlayer: 0
+  startedDestruction: 0
+  lifespan: 0
 --- !u!212 &212029704220918946
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -134,12 +138,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2d25bab2aa7fd6744b7c66cff56ec137, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 81b3081218de8984980d555992136b3a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.1125, y: 1.11}
+  m_Size: {x: 0.98888886, y: 0.9866667}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
