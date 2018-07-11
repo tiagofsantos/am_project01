@@ -25,17 +25,16 @@ public class MovingPlatform : MonoBehaviour {
 
         platform.transform.position = Vector3.MoveTowards(platform.transform.position, currentPoint.position, Time.deltaTime * moveSpeed);
 
-        if(platform.transform.position == currentPoint.position)
+        if (platform.transform.position == currentPoint.position)
         {
             pointSelection++;
-            
-            if(pointSelection == points.Length)
+
+            if (pointSelection == points.Length)
             {
                 pointSelection = 0;
             }
 
             currentPoint = points[pointSelection];
         }
-
-	}
+    }
 }
