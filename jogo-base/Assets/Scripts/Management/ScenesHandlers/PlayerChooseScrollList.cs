@@ -15,6 +15,8 @@ public class PlayerChooseScrollList : MonoBehaviour {
     /* list of buttons */
     public List<Button> buttons;
 
+    public Input filter;
+
     private void Start()
     {
         refreshDisplay();
@@ -31,14 +33,7 @@ public class PlayerChooseScrollList : MonoBehaviour {
         loadFriends();
         for (int i = 0; i < userList.Count; i++)
         {
-            User user = userList[i];
-            GameObject newButton = btnObjectPool.GetObject();
-            newButton.transform.SetParent(contentPanel);
-
-            ButtonUI button = newButton.GetComponent<ButtonUI>();
-            button.setup(user.name);
-            buttons.Add(button.button);
-            button.button.onClick.AddListener(() => addColor(button));
+            addButton(userList[i]);
         }
     }
 
@@ -100,5 +95,37 @@ public class PlayerChooseScrollList : MonoBehaviour {
         info = info.Remove(0, 1);
         info = info.Remove(index - 2, 1);
         return info;
+    }
+
+
+
+    public void Text_Changed(string text)
+    {
+        List<Button> buttonsCopy = buttons;
+        buttons.Clear();
+        foreach (Transform child in contentPanel.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+
+        for (int i=0; i < userList.Count; i++)
+        {
+            if (userList[i].name.Contains(text))
+            {
+                addButton(userList[i]);
+            }
+        }
+    }
+
+    private void addButton(User user)
+    {
+        GameObject newButton = btnObjectPool.GetObject();
+        newButton.transform.SetParent(contentPanel);
+
+        ButtonUI button = newButton.GetComponent<ButtonUI>();
+        button.setup(user.name);
+        buttons.Add(button.button);
+        button.button.onClick.AddListener(() => addColor(button));
     }
 }

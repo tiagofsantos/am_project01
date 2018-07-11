@@ -119,16 +119,30 @@ public class SessionManager
         return form;
     }
 
-    private WWWForm actionsToWWWForm(PlayerAction action,int sessionID)
+    private WWWForm actionsToWWWForm(List<PlayerAction> actions,int sessionID)
     {      
         WWWForm form = new WWWForm();
-        form.AddField("action", action.type.ToString());
-        form.AddField("timestamp", action.timestamp.ToString());
-        form.AddField("anteriorExecucao", action.previousExecutions.ToString());
-        form.AddField("sectionID",sessionID.ToString());
+        form.AddField("list", playerActionsToDicionary(actions, sessionID));
         return form;
     }
 
+    private String playerActionsToDicionary(List<PlayerAction> actions, int sessionID)
+    {
+        string information = "[";
+        const string quote = "\"";
+        for (int i = 0; i < actions.Count; i++)
+        {
+            string actionInfo = "{ "+ quote + "action" + quote +" : " + quote + actions[i].type.ToString() + quote +
+                ", " + quote + "timestamp" + quote + " : " + quote + actions[i].timestamp.ToString() + quote+
+                ", " + quote + "anteriorExecucao" + quote + " : " + quote + actions[i].previousExecutions.ToString() + quote +
+                ", " + quote + "sessionID" + quote + " : " + quote + sessionID.ToString() + quote +
+                "},";
+            information += actionInfo;
+        }
+        information = information.Remove(information.Length - 1);
+        information += "]";
+        return information;
+    }
 
     public void save()
     {
@@ -143,15 +157,16 @@ public class SessionManager
         }
 
         List<PlayerAction> actions = currentSession.actions;
-        actions.Add(new PlayerAction(ActionType.JUMP, 1.2f, 1));
-
-        for (int i = 0; i < actions.Count;i++){
-            WWWForm actionBody = actionsToWWWForm(actions[i], currentSession.id);
-            Dictionary<string, object> dicAction = GameManager.instance.serverManager.postRequest("/actions", actionBody);
-            if(dicAction==null)
-                Debug.Log("Não guardado");
-            else
-                Debug.Log("Saved, id: " + dicAction["content"].ToString() + "");
+        WWWForm actionBody = actionsToWWWForm(actions, currentSession.id);
+        Dictionary<string, object> dicAction = GameManager.instance.serverManager.postRequest("/actions", actionBody);
+        if(dicAction==null)
+            Debug.Log("Não guardado");
+        else
+        {
+            Debug.Log("Saved, id: " + dicAction["content"].ToString() + "");    
         }
+            
     }
+
+
 }

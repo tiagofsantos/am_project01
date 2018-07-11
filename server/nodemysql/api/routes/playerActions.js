@@ -4,14 +4,17 @@ const mysql = require('mysql');
 const db = require('../db/dbConnector');
 
 router.post('/', (req, res) => {
-    console.log('insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao) values("'+
-    req.body.action+'",'+parseFloat(req.body.timestamp)+','+parseInt(req.body.anteriorExecucao)+','+parseInt(req.body.sectionID)+')');
-    let sql='insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao) values("'+
-    req.body.action+'",'+parseFloat(req.body.timestamp)+','+parseInt(req.body.anteriorExecucao)+','+parseInt(req.body.sectionID)+')';
-    let query = db.query(sql, (err, result) => {
-        if(err) throw res.json({success: false, message: err});
-        res.json({success: true, message: result["insertId"]});
-    });
+    var list=JSON.parse(req.body.list);
+    
+        for(var i=0; i< list.length ;i++){
+            let sql = 'insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao) values("'+
+                list[i].action+'",'+parseFloat(list[i].timestamp)+','+parseInt(list[i].anteriorExecucao)+
+                ','+parseInt(list[i].sessionID)+');';
+            let query = db.query(sql, (err, result) => {
+                if(err) throw res.json({success: false, message: err});       
+            });
+        }
+        res.json({success: true, message: 'Guardado!'});
 });
 
 router.get('/:id', (req, res) => {
