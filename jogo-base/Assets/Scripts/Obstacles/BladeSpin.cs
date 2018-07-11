@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class BladeSpin : MonoBehaviour {
 
-    public float speed;
-
-    private void Start()
-    {
-        speed = 300f;
-    }
-
+    public const float ROTATION_SPEED = 300.0f;
+    
     void Update()
     {
-        transform.Rotate(Vector3.forward, speed * Time.deltaTime);
+        transform.Rotate(Vector3.forward, ROTATION_SPEED * Time.deltaTime);
     }
 }

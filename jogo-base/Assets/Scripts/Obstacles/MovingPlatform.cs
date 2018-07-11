@@ -20,9 +20,8 @@ public class MovingPlatform : MonoBehaviour {
         currentPoint = points[pointSelection];
         moveSpeed = 3;
 	}
-	
-	
-	void Update () {
+
+    void Update () {
 
         platform.transform.position = Vector3.MoveTowards(platform.transform.position, currentPoint.position, Time.deltaTime * moveSpeed);
 

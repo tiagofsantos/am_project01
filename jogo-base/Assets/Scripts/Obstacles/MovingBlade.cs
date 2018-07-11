@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingBlade : MonoBehaviour {
 
-    public float moveSpeed;
+    public const float MOVEMENT_SPEED = 5f;
 
     public Transform currentPoint;
 
@@ -12,7 +12,7 @@ public class MovingBlade : MonoBehaviour {
 
     public int pointSelection;
 
-    public float stoppedTime = 5f; // Tempo que a lâmina fica parada quando chega aos destinos.
+    public const float STOPPED_TIME = 5f; // Tempo que a lâmina fica parada quando chega aos destinos.
 
     private bool stopped; // Verifica se a lâmina chegou a um dos destinos, para que ela fique parada.
    
@@ -21,14 +21,13 @@ public class MovingBlade : MonoBehaviour {
         stopped = false;
         pointSelection = 1;
         currentPoint = points[pointSelection];
-        moveSpeed = 5;
     }
     
     void Update()
     {
         if (!stopped)
         {
-            transform.position = Vector3.MoveTowards(transform.position, currentPoint.position, Time.deltaTime * moveSpeed);
+            transform.position = Vector3.MoveTowards(transform.position, currentPoint.position, Time.deltaTime * MOVEMENT_SPEED);
 
             if (transform.position == currentPoint.position)
             {
@@ -75,7 +74,7 @@ public class MovingBlade : MonoBehaviour {
     private IEnumerator wait()
     {
         stopped = true;
-        yield return new WaitForSeconds(stoppedTime);
+        yield return new WaitForSeconds(STOPPED_TIME);
         stopped = false;
     }
 }

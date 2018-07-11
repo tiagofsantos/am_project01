@@ -5,32 +5,28 @@ using UnityEngine;
 public class Turret : MonoBehaviour {
 
     public GameObject bullet;
-    public float bulletSpeed;
+    public const float BULLET_SPEED = 10f;
     public Vector3 direction;
+    public const float TIME_BETWEEN_SHOTS = 2f;
     
 	void Start () {
-        bulletSpeed = 10f;
         direction = Vector3.right;
         StartCoroutine(Activate());
     }
-	
-	void Update () {
-		
-	}
 
-    void Shoot()
+    void shoot()
     {
         GameObject clone = Instantiate(bullet, transform.position, transform.rotation);
         clone.GetComponent<TurretBullet>().spawnOrigin = gameObject;
-        clone.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(direction * bulletSpeed);
+        clone.GetComponent<Rigidbody2D>().velocity = transform.TransformDirection(direction * BULLET_SPEED);
     }
 
     IEnumerator Activate()
     {
         while (true)
         {
-            Shoot();
-            yield return new WaitForSeconds(2f);
+            shoot();
+            yield return new WaitForSeconds(TIME_BETWEEN_SHOTS);
         }
     }
 }
