@@ -4,7 +4,9 @@ const mysql = require('mysql');
 const db = require('../db/dbConnector');
 
 router.get('/:id', (req, res) => {
-    let sql = `SELECT idUtilizadorAmigo FROM amigo where idUtilizador=${req.params.id}`;
+    let sql = `SELECT u.idUtilizador,username,dataNascimento,pais,email FROM Utilizador u
+    inner join Amigo a on a.idUtilizador=u.idUtilizador where a.idUtilizador in 
+    (select idUtilizadorAmigo from Amigo where idUtilizador=${req.params.id})`;
     let query = db.query(sql, (err, result) => {
         if (err) throw res.json({ success: false, message: "user not found" });;
         res.json({ success: true, message: result });

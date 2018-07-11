@@ -4,10 +4,6 @@ const mysql = require('mysql');
 const db = require('../db/dbConnector');
 
 router.post('/', (req, res) => {
-    console.log(req.body.action);
-    console.log(req.body.timestamp);
-    console.log(req.body.anteriorExecucao);
-    console.log(req.body.sectionID);
     console.log('insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao) values("'+
     req.body.action+'",'+parseFloat(req.body.timestamp)+','+parseInt(req.body.anteriorExecucao)+','+parseInt(req.body.sectionID)+')');
     let sql='insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao) values("'+
