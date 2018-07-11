@@ -24,7 +24,6 @@ class Server
     {
         this.port = 8080;
         this.ip = "localhost";
-
         this.start();
     }
  

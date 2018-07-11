@@ -25,4 +25,13 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/levels/:id', (req, res) => {
+    let sql=`SELECT * FROM nivel where idNivel in (select distinct(idNivel) from sessao where idUtilizador=${req.params.id})`;
+    let query = db.query(sql, (err, result) => {
+        if(err) throw res.json({success: false, message: "session nto found"});;
+        //res.send(result);
+        res.json({success: true, content: result});
+    });
+});
+
 module.exports=router;

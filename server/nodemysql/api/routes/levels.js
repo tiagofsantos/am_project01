@@ -7,7 +7,6 @@ router.get('/', (req, res) => {
     let sql=`SELECT * FROM nivel`;
     let query = db.query(sql, (err, result) => {
         if(err) throw res.json({success: false, message: err});;
-        //res.send(result);
         res.json({success: true, message: result});
     });
 });
