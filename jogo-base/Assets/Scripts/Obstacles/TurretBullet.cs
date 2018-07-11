@@ -5,15 +5,16 @@ using UnityEngine;
 public class TurretBullet : MonoBehaviour {
 
     public GameObject spawnOrigin;
-    SpriteRenderer renderer;
-    bool started;
+    public SpriteRenderer renderer;
+    public bool hitPlayer;
+    public bool startedDestruction;
+    public const float LIFESPAN = 10f;
     
     void Start () {
         renderer = this.GetComponent<SpriteRenderer>();
-    }
-	
-	void Update () {
-        started = false;
+        hitPlayer = false;
+        startedDestruction = false;
+        StartCoroutine(timespan());
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -35,7 +36,7 @@ public class TurretBullet : MonoBehaviour {
             }
 
             StartCoroutine(player.movement.fadeout());
-            started = true;
+            hitPlayer = true;
 
             color.a -= 0.5f;
             renderer.material.color = color;
@@ -48,12 +49,32 @@ public class TurretBullet : MonoBehaviour {
             return;
         }
 
-        if (!started && other.transform.tag == "Ground")
+        if (!hitPlayer && other.transform.tag == "Ground")
+        {
+            startedDestruction = true;
             Destroy(this.gameObject);
+        }
+    }
+
+    private IEnumerator timespan()
+    {
+        yield return new WaitForSeconds(LIFESPAN);
+
+        if(!startedDestruction) {
+            if (hitPlayer)
+            {
+                StartCoroutine(destroyBullet());
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     private IEnumerator destroyBullet()
     {
+        startedDestruction = true;
         this.GetComponent<SpriteRenderer>().enabled = false;
         Destroy(this.GetComponent<Rigidbody2D>());
         Destroy(this.GetComponent<Collider2D>());
