@@ -57,11 +57,12 @@ public class GameManager : MonoBehaviour
         testOpSession.actions.Add(new PlayerAction(ActionType.MOVE_LEFT, 2f, 1));
         testOpSession.actions.Add(new PlayerAction(ActionType.JUMP, 2.5f, 1));
 
-        sessionManager.create(2, userLogged, characterChoosed, testOpSession);
-        sessionManager.load(2);
+        sessionManager.create(2, userLogged, characterChoosed, sessionManager.load(7));
        
         Session currentSession = sessionManager.getCurrentSession();
         Session opponentSession = sessionManager.getOpponentSession();
+
+        Debug.Log(opponentSession.id);
 
         playerObject = spawner.spawnPlayer(currentSession.user, currentSession.character);
 
@@ -95,6 +96,7 @@ public class GameManager : MonoBehaviour
         if (state == GameState.INGAME)
         {
             ActionTracker tracker = playerObject.GetComponent<ActionTracker>();
+            Debug.Log(tracker.actions.Count);
             sessionManager.getCurrentSession().actions.AddRange(tracker.actions); 
             sessionManager.save();
         }

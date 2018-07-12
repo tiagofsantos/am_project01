@@ -6,13 +6,13 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SessionManager 
+public class SessionManager
 {
     private Session currentSession;
 
-    public void create(int id,User user, Character character, Session opponentSession)
+    public void create(int id, User user, Character character, Session opponentSession)
     {
-        currentSession = new Session(id,user, character, opponentSession);
+        currentSession = new Session(id, user, character, opponentSession);
     }
 
     public Session getCurrentSession()
@@ -25,34 +25,35 @@ public class SessionManager
         return currentSession.opponentSession;
     }
 
-    public Session load( int id)
+    public Session load(int id)
     {
-        return getSessionFromDB(id,false);
+        return getSessionFromDB(id, false);
     }
 
     private List<PlayerAction> getPlayerActions(int sessionID)
     {
-        List<PlayerAction> actions = new List<PlayerAction>() ;
+        List<PlayerAction> actions = new List<PlayerAction>();
         Dictionary<string, object> actionsDic = GameManager.instance.serverManager.request("/actions/" + sessionID);
 
         if (actionsDic == null || actionsDic["result"].ToString() == false.ToString())
             return null;
 
-        List <Dictionary<string, object>> actionsInformation = ((List<Dictionary<string, object>>)actionsDic["content"]);
+        List<Dictionary<string, object>> actionsInformation = ((List<Dictionary<string, object>>)actionsDic["content"]);
 
-        for(int i=0; i < actionsInformation.Count; i++)
+        for (int i = 0; i < actionsInformation.Count; i++)
         {
             ActionType actionType = ActionTypeHandler.getActionType(actionsInformation[i]["açao"].ToString());
             float timestamp = float.Parse(actionsInformation[i]["tempoAtual"].ToString());
             int previousExecutions = int.Parse(actionsInformation[i]["anteriorExecucao"].ToString());
             PlayerAction playerAction = new PlayerAction(actionType, timestamp, previousExecutions);
-            actions.Insert(i,playerAction);
+            actions.Insert(i, playerAction);
         }
 
         return actions;
     }
 
-    private User getUSerFromDB(int idUser){
+    private User getUSerFromDB(int idUser)
+    {
 
         Dictionary<string, object> userDic = GameManager.instance.serverManager.request("/users/" + idUser);
 
@@ -64,7 +65,7 @@ public class SessionManager
         int id = int.Parse(userInformation["idUtilizador"].ToString());
         string name = userInformation["username"].ToString();
         string email = userInformation["email"].ToString();
-        DateTime dataN = DateTime.ParseExact(userInformation["dataNascimento"].ToString(), "'\"'yyyy-MM-dd'T'HH:mm:ss.fff'Z\"'", null);  
+        DateTime dataN = DateTime.ParseExact(userInformation["dataNascimento"].ToString(), "'\"'yyyy-MM-dd'T'HH:mm:ss.fff'Z\"'", null);
         string pw = userInformation["pw"].ToString();
         string pais = userInformation["pais"].ToString();
 
@@ -72,32 +73,34 @@ public class SessionManager
     }
 
 
-    private Session getSessionFromDB(int id, bool isAgainstSession) {
+    private Session getSessionFromDB(int id, bool isAgainstSession)
+    {
         Dictionary<string, object> sessionDic = GameManager.instance.serverManager.request("/sessions/" + id);
-        if (sessionDic == null ||  sessionDic["result"].ToString() == false.ToString())
+        if (sessionDic == null || sessionDic["result"].ToString() == false.ToString())
             return null;
-   
+
         Dictionary<string, object> sessionInformation = ((List<Dictionary<string, object>>)sessionDic["content"])[0];
 
-        User user=getUSerFromDB(int.Parse(sessionInformation["idUtilizador"].ToString()));
+        User user = getUSerFromDB(int.Parse(sessionInformation["idUtilizador"].ToString()));
 
-        Session sessionAgainst=null;
-        if(!isAgainstSession && sessionInformation["idSessaoContra"].ToString() != "-1"){
-            sessionAgainst=getSessionFromDB(int.Parse(sessionInformation["idSessaoContra"].ToString()),true);
+        Session sessionAgainst = null;
+        if (!isAgainstSession && sessionInformation["idSessaoContra"].ToString() != "-1")
+        {
+            sessionAgainst = getSessionFromDB(int.Parse(sessionInformation["idSessaoContra"].ToString()), true);
         }
 
         List<PlayerAction> playerActions = getPlayerActions(id);
 
-        Session session = new Session(int.Parse(sessionInformation["idSessao"].ToString()),user, getCharacter(sessionInformation["personagem"].ToString()), sessionAgainst, playerActions);
+        Session session = new Session(int.Parse(sessionInformation["idSessao"].ToString()), user, getCharacter(sessionInformation["personagem"].ToString()), sessionAgainst, playerActions);
         return session;
-   }
+    }
 
 
     private Character getCharacter(String name)
     {
         switch (name)
         {
-            case "Scout":return new Scout();
+            case "Scout": return new Scout();
             case "Buster": return new Buster();
             case "Sargent": return new Sargent();
             default: return new Scout();
@@ -119,8 +122,8 @@ public class SessionManager
         return form;
     }
 
-    private WWWForm actionsToWWWForm(List<PlayerAction> actions,int sessionID)
-    {      
+    private WWWForm actionsToWWWForm(List<PlayerAction> actions, int sessionID)
+    {
         WWWForm form = new WWWForm();
         form.AddField("list", playerActionsToDicionary(actions, sessionID));
         return form;
@@ -132,8 +135,8 @@ public class SessionManager
         const string quote = "\"";
         for (int i = 0; i < actions.Count; i++)
         {
-            string actionInfo = "{ "+ quote + "action" + quote +" : " + quote + actions[i].type.ToString() + quote +
-                ", " + quote + "timestamp" + quote + " : " + quote + actions[i].timestamp.ToString() + quote+
+            string actionInfo = "{ " + quote + "action" + quote + " : " + quote + actions[i].type.ToString() + quote +
+                ", " + quote + "timestamp" + quote + " : " + quote + actions[i].timestamp.ToString() + quote +
                 ", " + quote + "anteriorExecucao" + quote + " : " + quote + actions[i].previousExecutions.ToString() + quote +
                 ", " + quote + "sessionID" + quote + " : " + quote + sessionID.ToString() + quote +
                 "},";
@@ -147,8 +150,8 @@ public class SessionManager
     public void save()
     {
         WWWForm body = sectionToWWWForm(currentSession);
-        Dictionary<string, object>  dic = GameManager.instance.serverManager.postRequest("/sessions", body);
-        if(dic==null)
+        Dictionary<string, object> dic = GameManager.instance.serverManager.postRequest("/sessions", body);
+        if (dic == null)
             Debug.Log("Não guardado");
         else
         {
@@ -159,13 +162,13 @@ public class SessionManager
         List<PlayerAction> actions = currentSession.actions;
         WWWForm actionBody = actionsToWWWForm(actions, currentSession.id);
         Dictionary<string, object> dicAction = GameManager.instance.serverManager.postRequest("/actions", actionBody);
-        if(dicAction==null)
+        if (dicAction == null)
             Debug.Log("Não guardado");
         else
         {
-            Debug.Log("Saved, id: " + dicAction["content"].ToString() + "");    
+            Debug.Log("Saved, id: " + dicAction["content"].ToString() + "");
         }
-            
+
     }
 
 

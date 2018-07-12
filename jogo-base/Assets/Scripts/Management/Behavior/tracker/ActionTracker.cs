@@ -6,23 +6,22 @@ using UnityEngine;
 public class ActionTracker : MonoBehaviour
 {
     public List<PlayerAction> actions;
-    private int executions;
+    public int ticks;
 
     void Start()
     {
         actions = new List<PlayerAction>();
     }
 
+    private void Update()
+    {
+        ticks++;
+    }
+
     /* Adiciona uma nova ação, no tempo actual. */
     public void addAction(ActionType type)
     {
-        if (actions.Count == 0 || actions[actions.Count - 1].type != type)
-        {
-            actions.Add(new PlayerAction(type, Time.time, executions));
-            executions = 0;
-        }
-        else
-            executions++;
+        actions.Add(new PlayerAction(type, Time.time, ticks));
     }
 
 }
