@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33311925477317180}
   - component: {fileID: 23615323071100956}
   - component: {fileID: 61889280709056532}
-  - component: {fileID: 114624467695530464}
+  - component: {fileID: 114694381603507814}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Turret
@@ -109,7 +109,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114624467695530464
+--- !u!114 &114694381603507814
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1063086858370774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65e3e89d61740e643b1839302ea73d85, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c20c56a6ed543b43ac533d0083a572d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1330452304534762, guid: 844ab356b24c8604caf2a1d7def7299b, type: 2}

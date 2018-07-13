@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4047423560709648}
   - component: {fileID: 58532239680175446}
-  - component: {fileID: 114521985774187972}
+  - component: {fileID: 114702712827768798}
   m_Layer: 0
   m_Name: BladeHitBox
   m_TagString: Untagged
@@ -164,7 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4044180836053644}
   - component: {fileID: 212939353692741440}
-  - component: {fileID: 114731651649886160}
+  - component: {fileID: 114313260125062532}
   m_Layer: 0
   m_Name: Blade
   m_TagString: Untagged
@@ -192,7 +192,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1294188086672432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.178, z: 0}
+  m_LocalPosition: {x: 0, y: -0.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 4454200315878494}
@@ -261,7 +261,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1245299058523272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.110413, y: 3.58, z: 0.22460938}
+  m_LocalPosition: {x: 3.85, y: 3.5673842, z: 0.22460938}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4473167128380264}
@@ -305,7 +305,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1668150049162414}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.273, z: 0.2246094}
+  m_LocalPosition: {x: 0, y: -1.06, z: 0.2246094}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4758061109005324}
@@ -436,25 +436,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114521985774187972
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1294188086672432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b93cf1e166b5f24c83fd76d893ef2ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0
-  currentPoint: {fileID: 0}
-  points:
-  - {fileID: 4108880760166334}
-  - {fileID: 4889180558354802}
-  pointSelection: 0
-  stoppedTime: 5
---- !u!114 &114731651649886160
+--- !u!114 &114313260125062532
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -462,10 +444,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1996200457584532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09021a129794a514a98cb32a0d93f050, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d5d73270acbd3541ac71c85d288fe0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+--- !u!114 &114702712827768798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1294188086672432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d227f2e818ec8ec4d9f6376994d14055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPoint: {fileID: 0}
+  points:
+  - {fileID: 4108880760166334}
+  - {fileID: 4889180558354802}
+  pointSelection: 0
 --- !u!212 &212036107334079762
 SpriteRenderer:
   m_ObjectHideFlags: 1
