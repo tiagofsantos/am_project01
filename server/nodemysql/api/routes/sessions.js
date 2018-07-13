@@ -16,8 +16,18 @@ router.post('/', (req, res) => {
     });
 });
 
+router.post('/opp/', (req, res) => {
+    let sql = mysql.format('SELECT idSessao,dataSessao, tempoPassado, idNivel, idSessaoContra, personagem, idUtilizador FROM sessao where idNivel='+req.body.level+' and idUtilizador='+req.body.userId+' order by tempoPassado limit 1;');
+    console.log(sql);
+    let query = db.query(sql, (err, result) => {
+        if(err) throw res.json({success: false, message: err});
+        console.log(result);
+        res.json({success: true, message: result});
+    });
+});
+
 router.get('/:id', (req, res) => {
-    let sql=`SELECT * FROM sessao where idSessao=${req.params.id}`;
+    let sql = mysql.format(`SELECT * FROM sessao where idSessao=${req.params.id}`);
     let query = db.query(sql, (err, result) => {
         if(err) throw res.json({success: false, message: "session nto found"});;
         //res.send(result);

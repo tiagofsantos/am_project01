@@ -30,6 +30,32 @@ public class SessionManager
         return getSessionFromDB(id, false);
     }
 
+    public Session loadOppSession(int userId,int level)
+    {
+        return getOppSessionFromDB(userId, level);
+
+    }
+
+    private Session getOppSessionFromDB(int userId, int level)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("userId", userId);
+        form.AddField("level", level);
+
+        Dictionary<string, object> sessionDic = GameManager.instance.serverManager.postRequest("/sessions/opp", form);
+        if (sessionDic == null || sessionDic["result"].ToString() == false.ToString())
+            return null;
+
+        Dictionary<string, object> sessionInformation = ((List<Dictionary<string, object>>)sessionDic["content"])[0];
+
+        User user = getUSerFromDB(int.Parse(sessionInformation["idUtilizador"].ToString()));
+
+        List<PlayerAction> playerActions = getPlayerActions(int.Parse(sessionInformation["idSessao"].ToString()));
+
+        Session session = new Session(int.Parse(sessionInformation["idSessao"].ToString()), user, getCharacter(sessionInformation["personagem"].ToString()), null, playerActions);
+        return session;
+    }
+
     private List<PlayerAction> getPlayerActions(int sessionID)
     {
         List<PlayerAction> actions = new List<PlayerAction>();

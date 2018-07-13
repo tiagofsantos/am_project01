@@ -49,8 +49,11 @@ public class GameManager : MonoBehaviour
 
         sessionManager.create(2, userLogged, characterChoosed, sessionManager.load(2));
        
+
         Session currentSession = sessionManager.getCurrentSession();
-        Session opponentSession = sessionManager.getOpponentSession();
+        sessionManager.getCurrentSession().opponentSession = opponentSession;
+
+        Debug.Log(opponentSession.id);
 
         Debug.Log(opponentSession.id);
 
