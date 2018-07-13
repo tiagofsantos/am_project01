@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
     private void moveHorizontal(float offset)
     {
         /* Apenas deixa o jogador se movimentar se possível */
-        if (respawning || localPlayer.vitals.isStunned())
+        if (respawning || isStunned())
             return;
 
         /* Se o jogador mudar de direção, a velocidade volta a 0 */
@@ -149,10 +149,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void jump()
     {
-        if (respawning || !grounded || localPlayer.vitals.isStunned())
+        if (respawning || !grounded || isStunned())
             return;
 
         body.AddForce(Vector2.up * jumpPower * jumpPowerModifier());
+    }
+
+    public bool isStunned()
+    {
+        return localPlayer.vitals.isStunned();
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -164,27 +169,44 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.transform.tag == "MovingPlatform")
+        {
+            transform.parent = other.transform;
+        }
+    }
+
+    public void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.transform.tag == "MovingPlatform")
+        {
+            transform.parent = null;
+        }
+    }
+
     /* Move o player para a posição do último checkpoint */
     public void respawn()
     {
         body.transform.position = respawnPoint;
+        body.velocity = Vector3.zero;
+        transform.parent = null;
+        respawning = false;
     }
 
-    /*Faz o jogador desaparecer e reaparecer no último checkpoint.*/
-    public IEnumerator fade()
+    public IEnumerator fadeout()
     {
+
         respawning = true; // O jogador deixa de poder controlar a personagem
         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
         Color color = renderer.material.color;
+
+        localPlayer.vitals.stun();
+        
+
         float speed = 0.1f; // Percisa de 10 iterações
-        float wait = 0.1f; // Tempo que espera depois de cada iteração. Quando a resistência muda este valor muda, a speed fica sempre igual. formula = (0,1) - (resistencia / 100)
+        float wait = 0.03f;
 
-        if (wait == 0)
-        {
-            wait = 0.009f;
-        }
-
-        //fade out
         while (color.a > 0)
         {
             color = renderer.material.color;
@@ -195,25 +217,40 @@ public class PlayerMovement : MonoBehaviour
 
             yield return new WaitForSeconds(wait); // Duração = wait / speed
         }
-        body.velocity = Vector3.zero;
-        body.angularVelocity = 0;
 
-        //volta ao checkpoint
         respawn();
 
-        respawning = false; // O jogador volta a ganhar controlo da personagem quando esta volta ao checkpoint
+        StartCoroutine(fadein(localPlayer.vitals.stunPenalty()));
+    }
 
-        //fade in
+    public IEnumerator fadein(float time)
+    {
+        SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
+        Color color = renderer.material.color;
+
+        float speed = 0.1f; 
+
         while (color.a < 1)
         {
+            if (respawning)
+            {
+                break;
+            }
+
             color = renderer.material.color;
 
             color.a += speed;
 
+            if (color.a > 1)
+            {
+                color.a = 1;
+            }
+
             renderer.material.color = color;
 
-            yield return new WaitForSeconds(wait);
+            yield return new WaitForSeconds(time / 10);
         }
     }
+
 
 }

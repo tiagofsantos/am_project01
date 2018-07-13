@@ -12,7 +12,7 @@ public class HoleTrigger : MonoBehaviour
         if (collision.CompareTag(PLAYER_TAG))
         {
             Player player = collision.gameObject.GetComponent<Player>();
-            StartCoroutine(player.movement.fade());
+            StartCoroutine(player.movement.fadeout());
         }
     }
 }
