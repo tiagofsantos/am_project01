@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 23615323071100956}
   - component: {fileID: 61889280709056532}
   - component: {fileID: 114624467695530464}
-  - component: {fileID: 114944064328476800}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Turret
@@ -122,20 +121,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1330452304534762, guid: 844ab356b24c8604caf2a1d7def7299b, type: 2}
-  bulletSpeed: 0
-  direction: {x: 0, y: 0, z: 0}
-  timeBetweenShots: 0
---- !u!114 &114944064328476800
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1063086858370774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eced8476649d1e34d9fd4a5db8111f02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 1330452304534762, guid: acf1fbfb33fffc8408225f6462cd143a, type: 2}
-  bulletSpeed: 0
   direction: {x: 0, y: 0, z: 0}
