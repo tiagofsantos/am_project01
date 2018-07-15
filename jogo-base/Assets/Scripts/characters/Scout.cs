@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Scout : Character
 {
+
     public Scout()
     {
         name = "Scout";

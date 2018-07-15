@@ -3,22 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum GameState { MENU, INGAME }
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    private EntitySpawner spawner;
-    private SessionManager sessionManager;
+    public EntitySpawner spawner;
+    public SessionManager sessionManager;
+    public ServerHandler serverManager;
 
     private GameObject playerObject;
     private GameObject opponentObject;
 
-    /* Test values */
-    //private int testSessionId = 1;
-    private String testUsername = "Ruben";
-    private Character testCharacter = new Scout();
+    public User userLogged;
+    public GameType gameType;
+    public User userAgainst;
+    public int levelChoosed;
+    public Character characterChoosed;
 
-    private Session testOpSession;
+    private GameState state;
 
     void Awake()
     {
@@ -32,18 +36,18 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        state = GameState.MENU;
+        userAgainst = null;
+        characterChoosed = null;
+        serverManager = new ServerHandler();
+    }
+
+    public void playMulti()
+    {
         spawner = new EntitySpawner();
         sessionManager = new SessionManager();
 
-        User ruben = new User(0, testUsername, "ruben.amendoeira@gmail.com", DateTime.ParseExact("06/12/1996", "dd/MM/yyyy", null), "teste123", "PT");
-        User hugo = new User(1, "Hugo", "hugobenfiquista@live.com.pt", DateTime.ParseExact("25/05/1997", "dd/MM/yyyy", null), "teste123", "PT");
-
-        testOpSession = new Session(hugo, new Buster(), null);
-        testOpSession.actions.Add(new PlayerAction(ActionType.JUMP, 1.2f, 1));
-        testOpSession.actions.Add(new PlayerAction(ActionType.MOVE_LEFT, 2f, 1));
-        testOpSession.actions.Add(new PlayerAction(ActionType.JUMP, 2.5f, 1));
-
-        sessionManager.create(ruben, testCharacter, testOpSession); // sessionManager.load(ruben.name, testSessionId)
+        sessionManager.create(2, userLogged, characterChoosed, sessionManager.load(24));
 
         Session currentSession = sessionManager.getCurrentSession();
         Session opponentSession = sessionManager.getOpponentSession();
@@ -54,30 +58,48 @@ public class GameManager : MonoBehaviour
         {
             opponentObject = spawner.spawnShadow(opponentSession.user, opponentSession.character);
 
-            ActionReplay replay = opponentObject.GetComponent<ActionReplay>();
-            replay.actions = new List<PlayerAction>();
-            replay.actions.AddRange(opponentSession.actions);
+            if (opponentSession.actions != null)
+            {
+                ActionReplay replay = opponentObject.GetComponent<ActionReplay>();
+                replay.actions = new List<PlayerAction>();
+                replay.actions.AddRange(opponentSession.actions);
+            }
         }
+        state = GameState.INGAME;
+
+    }
+
+    public void playSolo()
+    {
+        Debug.Log("Completar");
     }
 
     void Update()
     {
-        sessionManager.getCurrentSession().elapsedTime += Time.deltaTime;
+        if (state == GameState.INGAME)
+        {
+            sessionManager.getCurrentSession().elapsedTime += Time.deltaTime;
+        }
     }
 
     private void OnApplicationQuit()
     {
-        ActionTracker tracker = playerObject.GetComponent<ActionTracker>();
-        sessionManager.getCurrentSession().actions.AddRange(tracker.actions);
-
-        //sessionManager.save();
+        if (state == GameState.INGAME)
+        {
+            ActionTracker tracker = playerObject.GetComponent<ActionTracker>();
+            Debug.Log(tracker.actions.Count);
+            sessionManager.getCurrentSession().actions.AddRange(tracker.actions);
+            sessionManager.save();
+        }
     }
 
-    public User getLocalUser() {
+    public User getLocalUser()
+    {
         return sessionManager.getCurrentSession().user;
     }
 
-    public Session getLocalSession() {
+    public Session getLocalSession()
+    {
         return sessionManager.getCurrentSession();
     }
 }
