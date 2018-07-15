@@ -103,7 +103,7 @@ public class Vitals : MonoBehaviour
      * 
      * Desta forma, o tempo de espera desce quando o nível de resistência sobe.
      * */
-    private float stunPenalty()
+    public float stunPenalty()
     {
         return ((Character.MAX_SKILL_LEVEL - localPlayer.character.getLevel(Skill.ENDURANCE)) / 2) + 2;
     }
