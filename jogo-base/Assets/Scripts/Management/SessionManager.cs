@@ -10,9 +10,10 @@ public class SessionManager
 {
     private Session currentSession;
 
-    public void create(int id, User user, Character character, Session opponentSession)
+    public Session create(User user, Character character, Session opponentSession)
     {
-        currentSession = new Session(id, user, character, opponentSession);
+        currentSession = new Session(-1, user, character, opponentSession);
+        return currentSession;
     }
 
     public Session getCurrentSession()
