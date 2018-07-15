@@ -39,23 +39,18 @@ public class GameManager : MonoBehaviour
         state = GameState.MENU;
         userAgainst = null;
         characterChoosed = null;
-        serverManager = new ServerHandler();    
+        serverManager = new ServerHandler();
     }
 
     public void playMulti()
-    {   
-        spawner =  new EntitySpawner();
+    {
+        spawner = new EntitySpawner();
         sessionManager = new SessionManager();
 
-        sessionManager.create(2, userLogged, characterChoosed, sessionManager.load(2));
-       
+        sessionManager.create(2, userLogged, characterChoosed, sessionManager.load(24));
 
         Session currentSession = sessionManager.getCurrentSession();
-        sessionManager.getCurrentSession().opponentSession = opponentSession;
-
-        Debug.Log(opponentSession.id);
-
-        Debug.Log(opponentSession.id);
+        Session opponentSession = sessionManager.getOpponentSession();
 
         playerObject = spawner.spawnPlayer(currentSession.user, currentSession.character);
 
@@ -63,9 +58,12 @@ public class GameManager : MonoBehaviour
         {
             opponentObject = spawner.spawnShadow(opponentSession.user, opponentSession.character);
 
-            ActionReplay replay = opponentObject.GetComponent<ActionReplay>();
-            replay.actions = new List<PlayerAction>();
-            replay.actions.AddRange(opponentSession.actions);
+            if (opponentSession.actions != null)
+            {
+                ActionReplay replay = opponentObject.GetComponent<ActionReplay>();
+                replay.actions = new List<PlayerAction>();
+                replay.actions.AddRange(opponentSession.actions);
+            }
         }
         state = GameState.INGAME;
 
@@ -90,18 +88,18 @@ public class GameManager : MonoBehaviour
         {
             ActionTracker tracker = playerObject.GetComponent<ActionTracker>();
             Debug.Log(tracker.actions.Count);
-            sessionManager.getCurrentSession().actions.AddRange(tracker.actions); 
+            sessionManager.getCurrentSession().actions.AddRange(tracker.actions);
             sessionManager.save();
         }
     }
 
-    public User getLocalUser() {
+    public User getLocalUser()
+    {
         return sessionManager.getCurrentSession().user;
     }
 
-    public Session getLocalSession() {
+    public Session getLocalSession()
+    {
         return sessionManager.getCurrentSession();
     }
-
-
 }

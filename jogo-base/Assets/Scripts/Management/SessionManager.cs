@@ -69,7 +69,7 @@ public class SessionManager
 
         for (int i = 0; i < actionsInformation.Count; i++)
         {
-            ActionType actionType = ActionTypeHandler.getActionType(actionsInformation[i]["açao"].ToString());
+            ActionType actionType = ActionTypeHandler.getActionType(actionsInformation[i]["açao"].ToString().Replace("\"", ""));
 
             int tickInicial = int.Parse(actionsInformation[i]["tickInicial"].ToString());
             int tickFinal = int.Parse(actionsInformation[i]["tickFinal"].ToString());

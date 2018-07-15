@@ -54,26 +54,35 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            localPlayer.movement.moveRight();
             localPlayer.tracker.addAction(ActionType.MOVE_RIGHT);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            localPlayer.movement.moveLeft();
             localPlayer.tracker.addAction(ActionType.MOVE_LEFT);
         }
-
+        
         if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D))
         {
-            localPlayer.movement.stop();
             localPlayer.tracker.closeAction(ActionType.MOVE_RIGHT);
             localPlayer.tracker.addAction(ActionType.STOP, 1);
         }
         else if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A))
         {
-            localPlayer.movement.stop();
             localPlayer.tracker.closeAction(ActionType.MOVE_LEFT);
             localPlayer.tracker.addAction(ActionType.STOP, 1);
+        }
+
+        if (Input.GetAxisRaw("Horizontal") == 0)
+        {
+            localPlayer.movement.stop();
+        }
+        else if (Input.GetAxisRaw("Horizontal") < -0.1f)
+        {
+            localPlayer.movement.moveLeft();
+        }
+        else if (Input.GetAxisRaw("Horizontal") > 0.1f)
+        {
+            localPlayer.movement.moveRight();
         }
     }
 }
