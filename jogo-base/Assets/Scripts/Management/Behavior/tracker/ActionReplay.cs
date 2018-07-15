@@ -8,49 +8,68 @@ public class ActionReplay : MonoBehaviour
     private Player localPlayer;
 
     public List<PlayerAction> actions;
+    public List<PlayerAction> executing;
 
-    private PlayerAction lastAction;
-    private int executions;
-    private int count;
+    private int ticks;
 
 
     void Start()
     {
         localPlayer = gameObject.GetComponent<Player>();
+        executing = new List<PlayerAction>();
     }
 
     void Update()
     {
-        float currentTime = Time.time;
-        count++;
+        ticks++;
+
+        List<PlayerAction> toRemove = new List<PlayerAction>();
 
         foreach (PlayerAction action in actions)
         {
-            if (currentTime > action.timestamp && !action.executed)
+            if (action.startTick == ticks)
             {
-                lastAction = action;
-                action.executed = true;
-                executeAction(action);
-                executions = 1;
+                executing.Add(action);
+                toRemove.Add(action);
+            }
+        }
+
+        foreach (PlayerAction remove in toRemove)
+        {
+            actions.Remove(remove);
+        }
+
+        toRemove.Clear();
+
+        foreach (PlayerAction action in executing)
+        {
+            if (action.endTick == ticks)
+            {
+                endAction(action);
+                toRemove.Add(action);
             }
             else
             {
-                if (lastAction != null)
-                {
-                    PlayerAction next = null;
-                    int currentIndex = actions.IndexOf(lastAction);
-
-                    if (currentIndex + 1 < actions.Count)
-                        next = actions[currentIndex + 1];
-
-                    if (next != null && executions < next.previousExecutions)
-                    {
-                        executeAction(lastAction);
-                        executions++;
-                    }
-
-                }
+                executeAction(action);
             }
+        }
+
+        foreach (PlayerAction remove in toRemove)
+        {
+            executing.Remove(remove);
+        }
+    }
+
+    private void endAction(PlayerAction action)
+    {
+        if (action.type == ActionType.SPRINT)
+        {
+            localPlayer.movement.sprinting = false;
+        }
+
+        if (action.type == ActionType.MOVE_LEFT || action.type == ActionType.MOVE_RIGHT)
+        {
+            localPlayer.movement.stop();
         }
     }
 
@@ -59,6 +78,31 @@ public class ActionReplay : MonoBehaviour
         if (action.type == ActionType.JUMP)
         {
             localPlayer.movement.jump();
+        }
+
+        if (action.type == ActionType.SPRINT)
+        {
+            localPlayer.movement.sprinting = true;
+        }
+
+        if (action.type == ActionType.CONSUME_1)
+        {
+            localPlayer.inventory.consume(0);
+        }
+
+        if (action.type == ActionType.CONSUME_2)
+        {
+            localPlayer.inventory.consume(1);
+        }
+
+        if (action.type == ActionType.CONSUME_3)
+        {
+            localPlayer.inventory.consume(2);
+        }
+
+        if (action.type == ActionType.CONSUME_4)
+        {
+            localPlayer.inventory.consume(3);
         }
 
         switch (action.type)

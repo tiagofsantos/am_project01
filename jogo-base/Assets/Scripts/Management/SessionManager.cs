@@ -33,6 +33,7 @@ public class SessionManager
     private List<PlayerAction> getPlayerActions(int sessionID)
     {
         List<PlayerAction> actions = new List<PlayerAction>();
+        /*
         Dictionary<string, object> actionsDic = GameManager.instance.serverManager.request("/actions/" + sessionID);
 
         if (actionsDic == null || actionsDic["result"].ToString() == false.ToString())
@@ -48,7 +49,7 @@ public class SessionManager
             PlayerAction playerAction = new PlayerAction(actionType, timestamp, previousExecutions);
             actions.Insert(i, playerAction);
         }
-
+        */
         return actions;
     }
 
@@ -132,6 +133,7 @@ public class SessionManager
     private String playerActionsToDicionary(List<PlayerAction> actions, int sessionID)
     {
         string information = "[";
+        /*
         const string quote = "\"";
         for (int i = 0; i < actions.Count; i++)
         {
@@ -143,7 +145,7 @@ public class SessionManager
             information += actionInfo;
         }
         information = information.Remove(information.Length - 1);
-        information += "]";
+        information += "]";*/
         return information;
     }
 
