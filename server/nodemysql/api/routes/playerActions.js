@@ -7,8 +7,8 @@ router.post('/', (req, res) => {
     var list=JSON.parse(req.body.list);
     
         for(var i=0; i< list.length ;i++){
-            let sql = 'insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao) values("'+
-                list[i].action+'",'+parseFloat(list[i].timestamp)+','+parseInt(list[i].anteriorExecucao)+
+            let sql = 'insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao) values("'+
+                list[i].action+'",'+parseInt(list[i].tickInicial)+','+parseInt(list[i].tickFinal)+
                 ','+parseInt(list[i].sessionID)+');';
             let query = db.query(sql, (err, result) => {
                 if(err) throw res.json({success: false, message: err});       

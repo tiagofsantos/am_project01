@@ -87,9 +87,9 @@ function createLevelTable() {
 function createActionTable() {
     var query = `CREATE TABLE IF NOT EXISTS AçaoJogador(idAçoesJogador bigint AUTO_INCREMENT,
         açao varchar(30) not null, 
-        tempoAtual float not null,
+        tickInicial int not null,
+        tickFinal int not null,
         idSessao bigint not null,
-        anteriorExecucao int not null,
         PRIMARY KEY (idAçoesJogador));
         `;
     executeQuery(query);
@@ -181,18 +181,18 @@ function populate(){
     executeQuery(query);
     query=`insert into sessao(dataSessao,tempoPassado,idNivel,idSessaoContra,personagem,idUtilizador)values(now(),3.93,1,1,"Scout",2);`;
     executeQuery(query);
-    query=`insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao)values("JUMP",1.2,1,1);`;
+    /*query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("JUMP",1,1,1);`;
     executeQuery(query);
-    query=`insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao)values("MOVE_LEFT",2,1,1);`;
+    query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("MOVE_LEFT",2,1,1);`;
     executeQuery(query);
-    query=`insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao)values("JUMP",2.5,1,1);`;
+    query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("JUMP",3,1,1);`;
     executeQuery(query);
-    query=`insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao)values("JUMP",1.2,1,2);`;
+    query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("JUMP",4,1,2);`;
     executeQuery(query);
-    query=`insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao)values("MOVE_LEFT",2,1,2);`;
+    query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("MOVE_LEFT",5,1,2);`;
     executeQuery(query);
-    query=`insert into AçaoJogador(açao,tempoAtual,anteriorExecucao,idSessao)values("JUMP",2.5,1,2);`;
-    executeQuery(query);
+    query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("JUMP",6,1,2);`;
+    executeQuery(query);*/
     query=`insert into TipoEstatistica(nome,descriçao)values("Resultado","Jogador ganhou ou não")`;
     executeQuery(query);
     query=`insert into TipoEstatistica(nome,descriçao)values("Tempo","Tempo que demorou a acabar o nivel");`;

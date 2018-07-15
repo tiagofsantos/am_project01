@@ -59,7 +59,7 @@ public class SessionManager
     private List<PlayerAction> getPlayerActions(int sessionID)
     {
         List<PlayerAction> actions = new List<PlayerAction>();
-        /*
+        
         Dictionary<string, object> actionsDic = GameManager.instance.serverManager.request("/actions/" + sessionID);
 
         if (actionsDic == null || actionsDic["result"].ToString() == false.ToString())
@@ -70,12 +70,13 @@ public class SessionManager
         for (int i = 0; i < actionsInformation.Count; i++)
         {
             ActionType actionType = ActionTypeHandler.getActionType(actionsInformation[i]["açao"].ToString());
-            float timestamp = float.Parse(actionsInformation[i]["tempoAtual"].ToString());
-            int previousExecutions = int.Parse(actionsInformation[i]["anteriorExecucao"].ToString());
-            PlayerAction playerAction = new PlayerAction(actionType, timestamp, previousExecutions);
-            actions.Insert(i, playerAction);
+
+            int tickInicial = int.Parse(actionsInformation[i]["tickInicial"].ToString());
+            int tickFinal = int.Parse(actionsInformation[i]["tickFinal"].ToString());
+            PlayerAction playerAction = new PlayerAction(actionType, tickInicial, tickFinal);
+            actions.Insert(i,playerAction);
         }
-        */
+        
         return actions;
     }
 
@@ -159,19 +160,19 @@ public class SessionManager
     private String playerActionsToDicionary(List<PlayerAction> actions, int sessionID)
     {
         string information = "[";
-        /*
         const string quote = "\"";
         for (int i = 0; i < actions.Count; i++)
         {
-            string actionInfo = "{ " + quote + "action" + quote + " : " + quote + actions[i].type.ToString() + quote +
-                ", " + quote + "timestamp" + quote + " : " + quote + actions[i].timestamp.ToString() + quote +
-                ", " + quote + "anteriorExecucao" + quote + " : " + quote + actions[i].previousExecutions.ToString() + quote +
+
+            string actionInfo = "{ "+ quote + "action" + quote +" : " + quote + actions[i].type.ToString() + quote +
+                ", " + quote + "tickInicial" + quote + " : " + quote + actions[i].startTick.ToString() + quote+
+                ", " + quote + "tickFinal" + quote + " : " + quote + actions[i].endTick.ToString() + quote +
                 ", " + quote + "sessionID" + quote + " : " + quote + sessionID.ToString() + quote +
                 "},";
             information += actionInfo;
         }
         information = information.Remove(information.Length - 1);
-        information += "]";*/
+        information += "]";
         return information;
     }
 
