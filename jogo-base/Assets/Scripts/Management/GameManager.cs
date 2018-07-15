@@ -47,10 +47,8 @@ public class GameManager : MonoBehaviour
         spawner = new EntitySpawner();
         sessionManager = new SessionManager();
 
-        sessionManager.create(2, userLogged, characterChoosed, sessionManager.load(24));
-
-        Session currentSession = sessionManager.getCurrentSession();
-        Session opponentSession = sessionManager.getOpponentSession();
+        Session opponentSession = sessionManager.loadOppSession(userAgainst.id, levelChoosed);
+        Session currentSession = sessionManager.create(userLogged, characterChoosed, opponentSession);
 
         playerObject = spawner.spawnPlayer(currentSession.user, currentSession.character);
 
@@ -65,8 +63,8 @@ public class GameManager : MonoBehaviour
                 replay.actions.AddRange(opponentSession.actions);
             }
         }
-        state = GameState.INGAME;
 
+        state = GameState.INGAME;
     }
 
     public void playSolo()

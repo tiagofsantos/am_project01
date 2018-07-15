@@ -11,7 +11,7 @@ public class ActionReplay : MonoBehaviour
     public List<PlayerAction> executing;
 
     private int ticks;
-    
+
     void Start()
     {
         localPlayer = gameObject.GetComponent<Player>();
@@ -21,6 +21,11 @@ public class ActionReplay : MonoBehaviour
     void Update()
     {
         ticks++;
+
+        if (actions == null)
+        {
+            return;
+        }
 
         List<PlayerAction> toRemove = new List<PlayerAction>();
 
