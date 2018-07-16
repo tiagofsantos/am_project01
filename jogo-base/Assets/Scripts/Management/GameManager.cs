@@ -42,14 +42,21 @@ public class GameManager : MonoBehaviour
         serverManager = new ServerHandler();
     }
 
-    public void playMulti()
+    public void play()
     {
         spawner = new EntitySpawner();
         sessionManager = new SessionManager();
+        Session opponentSession;
+        Session currentSession;
 
-        Session opponentSession = sessionManager.loadOppSession(userAgainst.id, levelChoosed);
-        Session currentSession = sessionManager.create(userLogged, characterChoosed, opponentSession);
+        if (userAgainst == null){
+            opponentSession = null;
+        }else{
+            opponentSession = sessionManager.load(5);
+        }
 
+        currentSession = sessionManager.create(userLogged, characterChoosed, opponentSession);
+        
         playerObject = spawner.spawnPlayer(currentSession.user, currentSession.character);
 
         if (opponentSession != null)
@@ -65,11 +72,6 @@ public class GameManager : MonoBehaviour
         }
 
         state = GameState.INGAME;
-    }
-
-    public void playSolo()
-    {
-        Debug.Log("Completar");
     }
 
     void Update()

@@ -66,7 +66,7 @@ public class LevelScrollList : MonoBehaviour {
     {
         ServerHandler server = GameManager.instance.serverManager;
         Dictionary<string, object> dic;
-        if (GameManager.instance.userAgainst != null){
+        if (GameManager.instance.gameType == GameType.MULTI){
             dic = server.request("/sessions/levels/" + GameManager.instance.userAgainst.id);
         } else {
             dic = server.request("/levels/");
