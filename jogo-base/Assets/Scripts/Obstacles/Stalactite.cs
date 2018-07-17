@@ -5,7 +5,7 @@ using UnityEngine;
 public class Stalactite : MonoBehaviour
 {
     /* Tempo que demora até a estalactite começar a cair, em segundos */
-    private const float TIME_BEFORE_FALL = 3f;
+    public float timeBeforeFall = 3f;
 
     /* Velocidade de queda da estalactite */
     private const float FALL_SPEED = 15.0f;
@@ -60,7 +60,7 @@ public class Stalactite : MonoBehaviour
     private IEnumerator timer()
     {
         activated = false;
-        yield return new WaitForSeconds(TIME_BEFORE_FALL);
+        yield return new WaitForSeconds(timeBeforeFall);
         activated = true;
     }
 }
