@@ -49,7 +49,7 @@ public class LevelCharacterHandler : MonoBehaviour {
     {
         if (GameManager.instance.levelChoosed != 0 && GameManager.instance.characterChoosed != null)
         {
-            SceneManager.LoadScene("Scenes/Main");
+            SceneManager.LoadScene("Scenes/Level1");
         }     
     }
 
