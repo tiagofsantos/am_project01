@@ -19,10 +19,13 @@ public class Stalactite : MonoBehaviour
      */
     private bool activated;
 
+    private bool hitPlayer;
+
     void Start()
     {
         // Inicia o temporizador, no final do qual o objecto começa a cair.
         StartCoroutine(timer());
+        hitPlayer = false;
     }
 
     void Update()
@@ -34,7 +37,16 @@ public class Stalactite : MonoBehaviour
 
             /* Destroí o objecto se ele já estiver abaixo da DESTRUCTION_POSITION. */
             if (this.transform.position.y <= DESTRUCTION_POSITION)
-                Destroy(gameObject);
+            {
+                if (!hitPlayer)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    StartCoroutine(destroy());
+                }
+            }
         }
     }
 
@@ -42,6 +54,8 @@ public class Stalactite : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            hitPlayer = true;
+
             Player player = other.gameObject.GetComponent<Player>();
             
             if (player.movement.respawning || player.movement.phasing)
@@ -62,5 +76,11 @@ public class Stalactite : MonoBehaviour
         activated = false;
         yield return new WaitForSeconds(timeBeforeFall);
         activated = true;
+    }
+
+    private IEnumerator destroy()
+    {
+        yield return new WaitForSeconds(10f);
+        Destroy(gameObject);
     }
 }
