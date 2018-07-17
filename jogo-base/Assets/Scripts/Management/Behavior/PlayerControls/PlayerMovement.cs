@@ -43,8 +43,11 @@ public class PlayerMovement : MonoBehaviour
     /* Determina se o player está imune a projéteis (phasing = atravessa os projeteis) */
     public bool phasing;
 
+    Animator anim;
+
     void Start()
     {
+        anim = GetComponent<Animator>();
         localPlayer = gameObject.GetComponent<Player>();
         body = gameObject.GetComponent<Rigidbody2D>();
 
@@ -54,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         limitVelocity();
+        anim.SetFloat("Speed", Mathf.Abs(body.velocity.x));
+        anim.SetBool("Grounded", grounded);
     }
 
     /* Limita a velocidade horizontal do jogador */
