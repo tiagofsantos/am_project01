@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour {
         {
             instance = this;
         }
-        else if (instance != null)
+        else
         {
             Destroy(gameObject);
         }
@@ -53,8 +53,7 @@ public class AudioManager : MonoBehaviour {
 
     private void Start()
     {
-        /* Preencher com o caminho geral */
-        //audioFilePath = ;
+        audioFilePath = "Assets/Audio/";
     }
 
     private IEnumerator play(string name, float volume)
