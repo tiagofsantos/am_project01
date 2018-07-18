@@ -14,9 +14,8 @@ TagManager:
   - StarItemQuantity
   - BoltItemQuantity
   - TimeElapsed
-  - Buster
-  - Sargent
-  - Scout
+  - StunTimer
+  - StunIndicator
   layers:
   - Default
   - TransparentFX
