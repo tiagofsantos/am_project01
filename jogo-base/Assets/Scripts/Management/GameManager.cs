@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     public User userLogged;
     public GameType gameType;
     public User userAgainst;
-    public int levelChoosed;
-    public Character characterChoosed;
+    public int levelChoosen;
+    public Character characterChoosen;
 
     private GameState state;
 
@@ -38,18 +38,25 @@ public class GameManager : MonoBehaviour
     {
         state = GameState.MENU;
         userAgainst = null;
-        characterChoosed = null;
+        characterChoosen = null;
         serverManager = new ServerHandler();
     }
 
-    public void playMulti()
+    public void play()
     {
         spawner = new EntitySpawner();
         sessionManager = new SessionManager();
+        Session opponentSession;
+        Session currentSession;
 
-        Session opponentSession = sessionManager.loadOppSession(userAgainst.id, levelChoosed);
-        Session currentSession = sessionManager.create(userLogged, characterChoosed, opponentSession);
+        if (userAgainst == null){
+            opponentSession = null;
+        }else{
+            opponentSession = sessionManager.loadOppSession(userAgainst.id, levelChoosen);
+        }
 
+        currentSession = sessionManager.create(userLogged, characterChoosen, opponentSession);
+        
         playerObject = spawner.spawnPlayer(currentSession.user, currentSession.character);
 
         if (opponentSession != null)
@@ -65,11 +72,6 @@ public class GameManager : MonoBehaviour
         }
 
         state = GameState.INGAME;
-    }
-
-    public void playSolo()
-    {
-        Debug.Log("Completar");
     }
 
     void Update()

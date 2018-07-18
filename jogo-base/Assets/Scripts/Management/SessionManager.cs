@@ -127,6 +127,7 @@ public class SessionManager
 
     private Character getCharacter(String name)
     {
+        name = name.Replace("\"", "");
         switch (name)
         {
             case "Scout": return new Scout();
@@ -172,7 +173,10 @@ public class SessionManager
                 "},";
             information += actionInfo;
         }
-        information = information.Remove(information.Length - 1);
+
+        if(actions.Count > 0)
+            information = information.Remove(information.Length - 1);
+
         information += "]";
         return information;
     }

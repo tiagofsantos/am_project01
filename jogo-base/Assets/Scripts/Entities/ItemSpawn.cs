@@ -8,7 +8,7 @@ public class ItemSpawn : MonoBehaviour
     private const string PLAYER_TAG = "Player";
 
     /* Máximo de jogadores por ronda */
-    private const int TOTAL_PLAYER_COUNT = 2;
+    private int totalPlayerCount = 2;
     
     /* Distância máximo/minima da posição inicial a que o spawn pode flutuar */
     private const float MAX_FLOAT_DISTANCE = .5f;
@@ -35,6 +35,8 @@ public class ItemSpawn : MonoBehaviour
     {
         renderer = GetComponent<SpriteRenderer>();
         pickers = new List<Player>();
+
+        totalPlayerCount = GameManager.instance.getLocalSession().opponentSession == null ? 1 : 2;
 
         startPosition = new Vector3(transform.position.x, transform.position.y, 0);
         direction = 1;
@@ -84,7 +86,7 @@ public class ItemSpawn : MonoBehaviour
                 pickers.Add(player);
 
                 /* Se todos os players já receberam o item, destruir o spawn */
-                if (pickers.Count == TOTAL_PLAYER_COUNT)
+                if (pickers.Count == totalPlayerCount)
                 {
                     Destroy(gameObject);
                 }

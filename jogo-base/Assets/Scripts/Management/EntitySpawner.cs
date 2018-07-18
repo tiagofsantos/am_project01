@@ -19,7 +19,18 @@ public class EntitySpawner
     
     public GameObject spawnPlayer(User user, Character character)
     {
-        GameObject playerObject = createObject("Player.prefab", playerSpawn.transform);
+        GameObject playerObject;
+        if (character.name == "Buster")
+        {
+            playerObject = createObject("Buster.prefab", playerSpawn.transform);
+        }else if (character.name == "Sargent")
+        {
+            playerObject = createObject("Sargent.prefab", playerSpawn.transform);
+        } else
+        {
+            playerObject = createObject("Scout.prefab", playerSpawn.transform);
+        }
+
         playerObject.name = "Player (" + user.name + ")";
 
         Player player = playerObject.GetComponent<Player>();
@@ -32,7 +43,23 @@ public class EntitySpawner
 
     public GameObject spawnShadow(User user, Character character)
     {
-        GameObject shadowObject = createObject("Shadow.prefab", playerSpawn.transform);
+        GameObject shadowObject;
+
+        Debug.Log(character.name);
+
+        if (character.name == "Buster")
+        {
+            shadowObject = createObject("ShadowBuster.prefab", playerSpawn.transform);
+        }
+        else if (character.name == "Sargent")
+        {
+            shadowObject = createObject("ShadowSargent.prefab", playerSpawn.transform);
+        }
+        else
+        {
+            shadowObject = createObject("ShadowScout.prefab", playerSpawn.transform);
+        }
+
         shadowObject.name = "Shadow (" + user.name + ")";
 
         Player player = shadowObject.GetComponent<Player>();

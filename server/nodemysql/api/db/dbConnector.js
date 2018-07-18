@@ -177,11 +177,11 @@ function populate(){
     executeQuery(query);
     query=`insert into nivel(nome) values("Nivel 2");`;
     executeQuery(query);
-    query=`insert into sessao(dataSessao,tempoPassado,idNivel,idSessaoContra,personagem,idUtilizador)values(now(),2.93,1,-1,"Scout",1);`;
+    /*query=`insert into sessao(dataSessao,tempoPassado,idNivel,idSessaoContra,personagem,idUtilizador)values(now(),2.93,1,-1,"Scout",1);`;
     executeQuery(query);
     query=`insert into sessao(dataSessao,tempoPassado,idNivel,idSessaoContra,personagem,idUtilizador)values(now(),3.93,1,1,"Scout",2);`;
     executeQuery(query);
-    /*query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("JUMP",1,1,1);`;
+    query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("JUMP",1,1,1);`;
     executeQuery(query);
     query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("MOVE_LEFT",2,1,1);`;
     executeQuery(query);
@@ -192,7 +192,7 @@ function populate(){
     query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("MOVE_LEFT",5,1,2);`;
     executeQuery(query);
     query=`insert into AçaoJogador(açao,tickInicial,tickFinal,idSessao)values("JUMP",6,1,2);`;
-    executeQuery(query);*/
+    executeQuery(query);
     query=`insert into TipoEstatistica(nome,descriçao)values("Resultado","Jogador ganhou ou não")`;
     executeQuery(query);
     query=`insert into TipoEstatistica(nome,descriçao)values("Tempo","Tempo que demorou a acabar o nivel");`;
@@ -202,7 +202,7 @@ function populate(){
     query=`insert into estatistica(valor,idTipoEstatistica,idSessao) values("2.93",2,1);`;
     executeQuery(query);
     query=`insert into estatistica(valor,idTipoEstatistica,idSessao) values("3.93",2,2);`;
-    executeQuery(query);
+    executeQuery(query);*/
     query=`insert into amigo(idUtilizadorAmigo,idUtilizador) values(2,1);`;
     executeQuery(query);
     query=`insert into amigo(idUtilizadorAmigo,idUtilizador) values(1,2);`;

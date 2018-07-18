@@ -17,6 +17,8 @@ TagManager:
   - Turret
   - MovingPlatform
   - TurretBullet
+  - StunTimer
+  - StunIndicator
   layers:
   - Default
   - TransparentFX

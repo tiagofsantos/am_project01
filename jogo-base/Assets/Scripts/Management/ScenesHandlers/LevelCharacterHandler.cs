@@ -24,7 +24,7 @@ public class LevelCharacterHandler : MonoBehaviour {
     public void chooseBuster()
     {
         resetColorButtons();
-        GameManager.instance.characterChoosed = new Buster();
+        GameManager.instance.characterChoosen = new Buster();
         btnBuster.GetComponent<Image>().color = Color.cyan;
     }
 
@@ -32,7 +32,7 @@ public class LevelCharacterHandler : MonoBehaviour {
     public void chooseScout()
     {
         resetColorButtons();
-        GameManager.instance.characterChoosed = new Scout();
+        GameManager.instance.characterChoosen = new Scout();
         btnScout.GetComponent<Image>().color = Color.cyan;
     }
 
@@ -40,14 +40,14 @@ public class LevelCharacterHandler : MonoBehaviour {
     public void chooseSargent()
     {
         resetColorButtons();
-        GameManager.instance.characterChoosed = new Sargent();
+        GameManager.instance.characterChoosen = new Sargent();
         btnSargent.GetComponent<Image>().color = Color.cyan;
     }
 
     /* if the level and character are chossed inicialize the game */
     public void play()
     {
-        if (GameManager.instance.levelChoosed != 0 && GameManager.instance.characterChoosed != null)
+        if (GameManager.instance.levelChoosen != 0 && GameManager.instance.characterChoosen != null)
         {
             SceneManager.LoadScene("Scenes/Level1");
         }     
