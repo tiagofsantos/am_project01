@@ -45,6 +45,8 @@ public class EntitySpawner
     {
         GameObject shadowObject;
 
+        Debug.Log(character.name);
+
         if (character.name == "Buster")
         {
             shadowObject = createObject("ShadowBuster.prefab", playerSpawn.transform);

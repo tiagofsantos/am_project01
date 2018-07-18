@@ -28,8 +28,9 @@ GameObject:
   - component: {fileID: 114512471759352846}
   - component: {fileID: 114931964003329260}
   - component: {fileID: 114346493122676040}
+  - component: {fileID: 114267663695087256}
   m_Layer: 8
-  m_Name: Shadow
+  m_Name: ShadowBuster
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +149,7 @@ Animator:
   m_GameObject: {fileID: 1031576944739244}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b714fa13bc8ce2b4d9914dabe9a44ccf, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0708aefb69c145f4f89933701fc52276, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -156,6 +157,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114267663695087256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1031576944739244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39d36f3cb39762449b916e8c680e0190, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114346493122676040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,6 +190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651c1f70e19260f48a69803d7c51a2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stamina: 0
+  stunClock: 0
 --- !u!114 &114699866130023202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,8 +207,10 @@ MonoBehaviour:
   movementSpeed: 6
   jumpPower: 700
   grounded: 0
+  body: {fileID: 0}
   respawning: 0
   sprinting: 0
+  phasing: 0
 --- !u!114 &114803822267471950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,10 +244,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5407603bbb933e642b163d4fe7823171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  user:
+    id: 0
+    name: 
+    email: 
+    password: 
+    country: 
   vitals: {fileID: 0}
   inventory: {fileID: 0}
   controller: {fileID: 0}
   movement: {fileID: 0}
+  hud: {fileID: 0}
   replay: {fileID: 0}
   tracker: {fileID: 0}
 --- !u!212 &212772545406606726
@@ -268,8 +291,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300016, guid: 825a7f0bec38e8f4db509d038448112b, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.491}
+  m_Sprite: {fileID: 21300016, guid: d45a39d2672008e4c920775296eeda3f, type: 3}
+  m_Color: {r: 0.5735294, g: 0.5735294, b: 0.5735294, a: 0.491}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
