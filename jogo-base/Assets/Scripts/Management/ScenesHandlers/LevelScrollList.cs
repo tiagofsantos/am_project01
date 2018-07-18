@@ -72,12 +72,16 @@ public class LevelScrollList : MonoBehaviour {
             dic = server.request("/levels/");
         }
            
-        List<Dictionary<string, object>> information = ((List<Dictionary<string, object>>)dic["content"]);
-        LevelScrollList list = new LevelScrollList();
-        for (int i = 0; i < information.Count; i++)
+        if(dic != null)
         {
-            levelList.Add(information[i]["nome"].ToString());
+            List<Dictionary<string, object>> information = ((List<Dictionary<string, object>>)dic["content"]);
+            LevelScrollList list = new LevelScrollList();
+            for (int i = 0; i < information.Count; i++)
+            {
+                levelList.Add(information[i]["nome"].ToString());
+            }
         }
+        
     }
 
 }
