@@ -30,6 +30,7 @@ GameObject:
   - component: {fileID: 114396357518522770}
   - component: {fileID: 114128768324120640}
   - component: {fileID: 114314282103570178}
+  - component: {fileID: 114768639483833948}
   m_Layer: 8
   m_Name: Sargent
   m_TagString: Player
@@ -219,9 +220,21 @@ MonoBehaviour:
   movementSpeed: 6
   jumpPower: 700
   grounded: 0
+  body: {fileID: 0}
   respawning: 0
   sprinting: 0
   phasing: 0
+--- !u!114 &114768639483833948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1031576944739244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39d36f3cb39762449b916e8c680e0190, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114803822267471950
 MonoBehaviour:
   m_ObjectHideFlags: 1
