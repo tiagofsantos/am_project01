@@ -43,7 +43,21 @@ public class EntitySpawner
 
     public GameObject spawnShadow(User user, Character character)
     {
-        GameObject shadowObject = createObject("Shadow.prefab", playerSpawn.transform);
+        GameObject shadowObject;
+
+        if (character.name == "Buster")
+        {
+            shadowObject = createObject("ShadowBuster.prefab", playerSpawn.transform);
+        }
+        else if (character.name == "Sargent")
+        {
+            shadowObject = createObject("ShadowSargent.prefab", playerSpawn.transform);
+        }
+        else
+        {
+            shadowObject = createObject("ShadowScout.prefab", playerSpawn.transform);
+        }
+
         shadowObject.name = "Shadow (" + user.name + ")";
 
         Player player = shadowObject.GetComponent<Player>();
