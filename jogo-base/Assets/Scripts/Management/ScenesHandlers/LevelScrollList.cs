@@ -58,7 +58,7 @@ public class LevelScrollList : MonoBehaviour {
         resetColorButtons();
         button.button.GetComponent<Image>().color = Color.cyan;
         string[] splitString = button.textInfo.text.Split(' ');
-        GameManager.instance.levelChoosed = int.Parse(splitString[1]);
+        GameManager.instance.levelChoosen = int.Parse(splitString[1]);
     }
 
     /* request levels to server and add to a list of levels */
@@ -66,18 +66,22 @@ public class LevelScrollList : MonoBehaviour {
     {
         ServerHandler server = GameManager.instance.serverManager;
         Dictionary<string, object> dic;
-        if (GameManager.instance.userAgainst != null){
+        if (GameManager.instance.gameType == GameType.MULTI){
             dic = server.request("/sessions/levels/" + GameManager.instance.userAgainst.id);
         } else {
             dic = server.request("/levels/");
         }
            
-        List<Dictionary<string, object>> information = ((List<Dictionary<string, object>>)dic["content"]);
-        LevelScrollList list = new LevelScrollList();
-        for (int i = 0; i < information.Count; i++)
+        if(dic != null)
         {
-            levelList.Add(information[i]["nome"].ToString());
+            List<Dictionary<string, object>> information = ((List<Dictionary<string, object>>)dic["content"]);
+            LevelScrollList list = new LevelScrollList();
+            for (int i = 0; i < information.Count; i++)
+            {
+                levelList.Add(information[i]["nome"].ToString());
+            }
         }
+        
     }
 
 }
