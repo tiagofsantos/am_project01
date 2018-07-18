@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,9 @@ public class PlayerHUD : MonoBehaviour
 
     private Text elapsedTime;
 
+    private Text stunTimer;
+    private GameObject stunContainer;
+
     void Start()
     {
         localPlayer = gameObject.GetComponent<Player>();
@@ -35,6 +39,11 @@ public class PlayerHUD : MonoBehaviour
 
         elapsedTime = GameObject.FindGameObjectWithTag("TimeElapsed").GetComponent<Text>();
 
+        stunContainer = GameObject.FindGameObjectWithTag("StunIndicator");
+        stunTimer = GameObject.FindGameObjectWithTag("StunTimer").GetComponent<Text>();
+
+        stunContainer.SetActive(false);
+
         defaultStaminaColor = new Color(staminaFill.color.r, staminaFill.color.g, staminaFill.color.b, 1f); ;
         sprintStaminaColor = new Color(staminaFill.color.r, staminaFill.color.g, staminaFill.color.b, .5f); ;
     }
@@ -43,6 +52,9 @@ public class PlayerHUD : MonoBehaviour
     {
         staminaSlider.value = localPlayer.vitals.stamina;
         staminaFill.color = localPlayer.movement.sprinting ? sprintStaminaColor : defaultStaminaColor;
+
+        stunContainer.SetActive(localPlayer.vitals.isStunned());
+        stunTimer.text = "Stunned: " + Math.Round(localPlayer.vitals.stunClock) + " s";
 
         Inventory inv = localPlayer.inventory;
 

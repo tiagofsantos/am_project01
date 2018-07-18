@@ -21,7 +21,7 @@ public class Vitals : MonoBehaviour
     public float stamina;
 
     /* O contador de stun, 0 = !stunned */
-    private float stunClock;
+    public float stunClock;
 
     void Start()
     {
