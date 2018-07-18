@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public User userLogged;
     public GameType gameType;
     public User userAgainst;
-    public int levelChoosed;
+    public int levelChoosen;
     public Character characterChoosen;
 
     private GameState state;
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         state = GameState.MENU;
         userAgainst = null;
-        characterChoosed = null;
+        characterChoosen = null;
         serverManager = new ServerHandler();
     }
 
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         if (userAgainst == null){
             opponentSession = null;
         }else{
-            opponentSession = sessionManager.loadOppSession(userAgainst.id,levelChoosed);
+            opponentSession = sessionManager.loadOppSession(userAgainst.id, levelChoosen);
         }
 
         currentSession = sessionManager.create(userLogged, characterChoosen, opponentSession);
