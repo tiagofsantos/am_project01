@@ -172,8 +172,10 @@ public class SessionManager
                 "},";
             information += actionInfo;
         }
-        if(actions.Count>0)
+
+        if(actions.Count > 0)
             information = information.Remove(information.Length - 1);
+
         information += "]";
         return information;
     }

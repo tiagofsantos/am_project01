@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public GameType gameType;
     public User userAgainst;
     public int levelChoosed;
-    public Character characterChoosed;
+    public Character characterChoosen;
 
     private GameState state;
 
@@ -52,10 +52,10 @@ public class GameManager : MonoBehaviour
         if (userAgainst == null){
             opponentSession = null;
         }else{
-            opponentSession = sessionManager.load(5);
+            opponentSession = sessionManager.loadOppSession(userAgainst.id,levelChoosed);
         }
 
-        currentSession = sessionManager.create(userLogged, characterChoosed, opponentSession);
+        currentSession = sessionManager.create(userLogged, characterChoosen, opponentSession);
         
         playerObject = spawner.spawnPlayer(currentSession.user, currentSession.character);
 
