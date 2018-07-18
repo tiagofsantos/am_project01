@@ -14,6 +14,9 @@ TagManager:
   - StarItemQuantity
   - BoltItemQuantity
   - TimeElapsed
+  - Turret
+  - MovingPlatform
+  - TurretBullet
   - StunTimer
   - StunIndicator
   layers:
@@ -26,7 +29,7 @@ TagManager:
   - 
   - 
   - Player
-  - 
+  - Background Image
   - 
   - 
   - 
@@ -50,12 +53,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: Background
+    uniqueID: 660450305
     locked: 0
   - name: Player
     uniqueID: 2009034801
     locked: 0
-  - name: Ground
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: 
     uniqueID: 1788647073
     locked: 0

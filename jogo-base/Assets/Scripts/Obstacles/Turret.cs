@@ -6,11 +6,10 @@ public class Turret : MonoBehaviour {
 
     public GameObject bullet;
     public const float BULLET_SPEED = 10f;
-    public Vector3 direction;
+    public Vector3 direction = Vector3.right;
     public const float TIME_BETWEEN_SHOTS = 2f;
     
 	void Start () {
-        direction = Vector3.right;
         StartCoroutine(Activate());
     }
 
