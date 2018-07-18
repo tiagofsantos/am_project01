@@ -58,7 +58,7 @@ public class LevelScrollList : MonoBehaviour {
         resetColorButtons();
         button.button.GetComponent<Image>().color = Color.cyan;
         string[] splitString = button.textInfo.text.Split(' ');
-        GameManager.instance.levelChoosed = int.Parse(splitString[1]);
+        GameManager.instance.levelChoosen = int.Parse(splitString[1]);
     }
 
     /* request levels to server and add to a list of levels */
