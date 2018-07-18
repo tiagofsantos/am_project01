@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public bool grounded;
 
     /* Rigidbody do player */
-    private Rigidbody2D body;
+    public Rigidbody2D body;
 
     /* A última direção para a qual o player se estava a mover */
     private float direction;
