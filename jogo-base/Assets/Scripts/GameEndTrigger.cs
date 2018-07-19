@@ -8,6 +8,8 @@ public class GameEndTrigger : MonoBehaviour {
     {
         if (collision.CompareTag("Player"))
         {
+            AudioManager.instance.playSound("game_end.wav");
+
             Player player = collision.gameObject.GetComponent<Player>();
 
             player.GetComponent<PlayerController>().enabled = false;
