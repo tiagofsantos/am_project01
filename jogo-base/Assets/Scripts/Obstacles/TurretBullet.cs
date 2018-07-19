@@ -35,6 +35,7 @@ public class TurretBullet : MonoBehaviour {
                 return;
             }
 
+            AudioManager.instance.playSound("turret_hit.wav");
             StartCoroutine(player.movement.fadeout());
             hitPlayer = true;
 

@@ -54,6 +54,7 @@ public class MovingBlade : MonoBehaviour {
             
             if (!player.movement.respawning)
             {
+                AudioManager.instance.playSound("blade_hit.wav");
                 StartCoroutine(player.movement.fadeout());
                 knockback(other);
             }
