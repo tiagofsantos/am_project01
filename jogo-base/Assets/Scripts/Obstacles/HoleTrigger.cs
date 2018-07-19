@@ -12,6 +12,7 @@ public class HoleTrigger : MonoBehaviour
         if (collision.CompareTag(PLAYER_TAG))
         {
             Player player = collision.gameObject.GetComponent<Player>();
+            AudioManager.instance.playSound("falling.wav");
             StartCoroutine(player.movement.fadeout());
         }
     }
