@@ -51,7 +51,6 @@ public class PlayerHUD : MonoBehaviour
     void Update()
     {
         staminaSlider.value = (float) Math.Round(localPlayer.vitals.stamina);
-        Debug.Log(staminaSlider.value);
         staminaFill.color = localPlayer.movement.sprinting ? sprintStaminaColor : defaultStaminaColor;
 
         stunContainer.SetActive(localPlayer.vitals.isStunned());
