@@ -29,8 +29,8 @@ public class PlayerHUD : MonoBehaviour
     {
         localPlayer = gameObject.GetComponent<Player>();
 
-        staminaSlider = GameObject.FindGameObjectWithTag("StaminaSlider").GetComponent<Slider>();
         staminaFill = GameObject.FindGameObjectWithTag("StaminaFill").GetComponent<Image>();
+        staminaSlider = GameObject.FindGameObjectWithTag("StaminaSlider2").GetComponent<Slider>();
 
         potionQuantity = GameObject.FindGameObjectWithTag("PotionItemQuantity").GetComponent<Text>();
         beefQuantity = GameObject.FindGameObjectWithTag("BeefItemQuantity").GetComponent<Text>();
@@ -50,7 +50,8 @@ public class PlayerHUD : MonoBehaviour
 
     void Update()
     {
-        staminaSlider.value = localPlayer.vitals.stamina;
+        staminaSlider.value = (float) Math.Round(localPlayer.vitals.stamina);
+        Debug.Log(staminaSlider.value);
         staminaFill.color = localPlayer.movement.sprinting ? sprintStaminaColor : defaultStaminaColor;
 
         stunContainer.SetActive(localPlayer.vitals.isStunned());
