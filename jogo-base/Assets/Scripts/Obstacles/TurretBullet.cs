@@ -35,13 +35,12 @@ public class TurretBullet : MonoBehaviour {
                 return;
             }
 
-            AudioManager.instance.playSound("turret_hit.wav");
             StartCoroutine(player.movement.fadeout());
             hitPlayer = true;
 
             color.a -= 0.5f;
             renderer.material.color = color;
-
+            AudioManager.instance.playSound("turret_hit.wav");
         }
         
         if(renderer.material.color.a == 0 || (renderer.material.color.a == 0.5 && other.transform.tag == "Ground"))

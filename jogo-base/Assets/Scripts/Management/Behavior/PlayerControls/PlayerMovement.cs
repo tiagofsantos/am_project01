@@ -152,8 +152,8 @@ public class PlayerMovement : MonoBehaviour
         if (respawning || !grounded || isStunned())
             return;
 
-        AudioManager.instance.playSound("jump.wav", .5f);
         body.AddForce(Vector2.up * jumpPower * jumpPowerModifier());
+        AudioManager.instance.playSound("jump.wav", .5f);
     }
 
     public bool isStunned()
