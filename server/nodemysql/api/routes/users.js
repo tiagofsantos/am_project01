@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
        if(result[0]){
             res.json({success: true, message: result});
        }else{
-            res.json({success: false, message: "Credenciais incorretas!"});
+            res.json({success: false, message: "Incorrect credentials!"});
        }   
     });
 });

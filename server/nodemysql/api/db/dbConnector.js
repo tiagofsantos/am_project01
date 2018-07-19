@@ -163,12 +163,22 @@ function executeQuery(query) {
 }
 
 function populate(){
-    var query=`insert into Utilizador(username,dataNascimento,pw,pais,email) values("hugo",curdate(),"1","Portugal","hugo@hotmail.com");`
+
+    var query=`insert into Utilizador(username,dataNascimento,pw,pais,email) values("Hugo Ferreira",curdate(),"1","Portugal","hugo@hotmail.com");`
     executeQuery(query);
-    query=`insert into Utilizador(username,dataNascimento,pw,pais,email)  values("ruben",curdate(),"1","Portugal","ruben@hotmail.com");`;
+
+    query=`insert into Utilizador(username,dataNascimento,pw,pais,email)  values("Ruben Amendoeira",curdate(),"1","Portugal","ruben@hotmail.com");`;
     executeQuery(query);
-    query=`insert into Utilizador(username,dataNascimento,pw,pais,email)  values("tiago",curdate(),"1","Portugal","tiago@hotmail.com");`;
+
+    query=`insert into Utilizador(username,dataNascimento,pw,pais,email)  values("Tiago Santos",curdate(),"1","Portugal","tiago@hotmail.com");`;
+    executeQuery(query); 
+    
+    query=`insert into Utilizador(username,dataNascimento,pw,pais,email)  values("Tiago Neto",curdate(),"1","Portugal","tiago_neto@hotmail.com");`;
+    executeQuery(query);  
+
+    query=`insert into Utilizador(username,dataNascimento,pw,pais,email)  values("Pedro Silva",curdate(),"1","Portugal","pedroo@hotmail.com");`;
     executeQuery(query);
+
     query=`insert into administrador(idUtilizador) values(1);`;
     executeQuery(query);
     query=`insert into administrador(idUtilizador) values(2);`;
