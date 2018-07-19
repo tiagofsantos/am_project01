@@ -11,7 +11,7 @@ public class Stalactite : MonoBehaviour
     private const float FALL_SPEED = 15.0f;
 
     /* Posição Y onde o objecto será destruído, para não cair infinitamente. */
-    private const float DESTRUCTION_POSITION = -10;
+    public float DESTRUCTION_POSITION = -10;
 
     /* Bool que afirma se o objecto está a cair. 
      * A estalactite apenas cai quando activated é true.
