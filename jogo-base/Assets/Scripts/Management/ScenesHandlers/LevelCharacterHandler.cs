@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelCharacterHandler : MonoBehaviour {
+public class LevelCharacterHandler : MonoBehaviour
+{
     /* Buster character button */
     public Button btnBuster;
     /* Scout character button */
@@ -47,10 +48,17 @@ public class LevelCharacterHandler : MonoBehaviour {
     /* if the level and character are chossed inicialize the game */
     public void play()
     {
-        if (GameManager.instance.levelChoosen != 0 && GameManager.instance.characterChoosen != null)
+        if (GameManager.instance.characterChoosen != null)
         {
-            SceneManager.LoadScene("Scenes/Level1");
-        }     
+            if (GameManager.instance.levelChoosen == 1)
+            {
+                SceneManager.LoadScene("Scenes/Level1");
+            }
+            else if (GameManager.instance.levelChoosen == 2)
+            {
+                SceneManager.LoadScene("Scenes/Level2");
+            }
+        }
     }
 
     /* button back */
