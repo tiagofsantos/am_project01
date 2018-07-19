@@ -19,6 +19,7 @@ public class Spikes : MonoBehaviour
              */
             if (!player.movement.respawning)
             {
+                AudioManager.instance.playSound("spikes_hit.mp3", .3f);
                 StartCoroutine(player.movement.fadeout());
                 knockback(other);
             }

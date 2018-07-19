@@ -71,7 +71,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        StartCoroutine(startMusic());
+
         state = GameState.INGAME;
+    }
+
+    IEnumerator startMusic()
+    {
+        yield return new WaitForSeconds(1);
+        AudioManager.instance.playSound("music.mp3");
     }
 
     void Update()

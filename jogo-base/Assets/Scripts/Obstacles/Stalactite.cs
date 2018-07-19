@@ -63,6 +63,7 @@ public class Stalactite : MonoBehaviour
                 return;
             }
 
+            AudioManager.instance.playSound("stalactite_hit.wav");
             StartCoroutine(player.movement.fadeout());
         }
     }
